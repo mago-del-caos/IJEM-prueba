@@ -147,23 +147,19 @@
   </section>
 
   <!-- Acceso y tablero -->
-  <section class="tarjeta noprint">
-    <span class="eyebrow">02 · Datos en vivo</span>
-    <h2>Resultados del asistente</h2>
-    <p class="desc">Escribe la clave del panel para cargar los datos en vivo: interesados registrados, conversaciones y casos canalizados a atención personal.</p>
-    <div class="fila">
-      <input type="password" id="clave" placeholder="Clave del panel" autocomplete="off">
-      <button id="btn-cargar" type="button">Cargar datos</button>
-      <button id="btn-pdf" type="button" class="boton rojo oculto">Descargar reporte en PDF</button>
-      <span class="estado" id="estado"></span>
-    </div>
-  </section>
-
-  <section class="tarjeta oculto" id="tablero">
+  <section class="tarjeta" id="analisis">
     <div class="solo-reporte">
-      <h2 id="rep-titulo">Reporte del asistente de Admisiones</h2>
+      <h2>Reporte del asistente de Admisiones</h2>
       <p class="desc" id="rep-fecha"></p>
     </div>
+    <span class="eyebrow">02 · Resultados</span>
+    <h2>Análisis de resultados</h2>
+    <p class="desc">Los totales del asistente, estilo tablero: cuántos interesados llegan, por dónde y qué nivel piden. Sin datos personales: nombres y contactos viven solo en la hoja de Drive, dividida por mes.</p>
+    <div class="fila noprint">
+      <button id="btn-pdf" type="button" class="boton rojo">Descargar reporte en PDF</button>
+      <span class="estado" id="an-estado">Cargando los totales…</span>
+    </div>
+
     <div class="stats">
       <div class="stat"><div class="barra"></div><b id="st-total">0</b><span>Interesados registrados</span><svg class="spark" id="spark-total" viewBox="0 0 100 28" width="100%" height="28" preserveAspectRatio="none" aria-hidden="true"></svg></div>
       <div class="stat wa"><div class="barra"></div><b id="st-wa">0</b><span>Por WhatsApp</span></div>
@@ -172,26 +168,22 @@
       <div class="stat can"><div class="barra"></div><b id="st-can">0</b><span>Casos canalizados</span></div>
     </div>
 
-
-    <h2 class="seccion">Análisis de resultados</h2>
     <div class="slicers noprint">
-      <span class="etq">Canal</span>
+      <span class="etq">Nivel por canal</span>
       <div class="grupo" id="f-canal">
         <button type="button" class="pill activa" data-canal="">Todos</button>
         <button type="button" class="pill" data-canal="whatsapp">WhatsApp</button>
         <button type="button" class="pill" data-canal="facebook">Facebook</button>
         <button type="button" class="pill" data-canal="web">Web</button>
       </div>
-      <span class="etq">Nivel</span>
-      <select id="f-nivel"><option value="">Todos los niveles</option></select>
-      <span class="etq">Periodo</span>
+      <span class="etq">Actividad</span>
       <select id="f-dias">
         <option value="7">Últimos 7 días</option>
         <option value="14" selected>Últimos 14 días</option>
         <option value="30">Últimos 30 días</option>
-        <option value="0">Todo</option>
       </select>
     </div>
+
     <div class="graficas">
       <div class="grafica">
         <h3>Interesados por canal</h3>
@@ -201,12 +193,12 @@
       </div>
       <div class="grafica">
         <h3>Interesados por nivel</h3>
-        <p class="sub">El nivel que más se pide</p>
+        <p class="sub" id="g-nivel-sub">El nivel que más se pide</p>
         <div class="barras" id="g-nivel"></div>
       </div>
       <div class="grafica">
         <h3>Actividad por día</h3>
-        <p class="sub">Mensajes recibidos por el asistente</p>
+        <p class="sub">Mensajes y registros del asistente</p>
         <div class="columnas" id="g-dias"></div>
       </div>
       <div class="grafica">
@@ -214,38 +206,23 @@
         <p class="sub">De la conversación al registro</p>
         <div class="barras" id="g-embudo"></div>
       </div>
-      <div class="grafica" style="grid-column:1/-1">
+      <div class="grafica">
+        <h3>Registros por mes</h3>
+        <p class="sub">El mismo corte de la hoja de Drive</p>
+        <div class="barras" id="g-mes"></div>
+      </div>
+      <div class="grafica">
         <h3>Hallazgos</h3>
         <p class="sub">Lo que dicen los datos, en palabras</p>
         <ul class="hallazgos" id="g-hallazgos"></ul>
       </div>
     </div>
-
-    <h2 class="seccion">Interesados registrados</h2>
-    <div class="tabla">
-      <table>
-        <thead><tr><th>Fecha</th><th>Canal</th><th>Nombre</th><th>Contacto</th><th>Nivel</th><th>Mensaje o necesidad</th></tr></thead>
-        <tbody id="tb-interesados"><tr><td colspan="6">Sin datos todavía.</td></tr></tbody>
-      </table>
-    </div>
-
-    <h2 class="seccion">Casos canalizados (conversación completa)</h2>
-    <div id="lista-canalizaciones"><p class="desc">Sin canalizaciones todavía.</p></div>
-
-    <h2 class="seccion">Conversaciones recientes</h2>
-    <div class="tabla">
-      <table>
-        <thead><tr><th>Fecha</th><th>Canal</th><th>Mensaje</th><th>Respuesta del asistente</th></tr></thead>
-        <tbody id="tb-conversaciones"><tr><td colspan="4">Sin conversaciones todavía.</td></tr></tbody>
-      </table>
-    </div>
   </section>
 
-  <!-- Drive -->
   <section class="tarjeta noprint">
     <span class="eyebrow">03 · Respaldo</span>
     <h2>Registro en Drive</h2>
-    <p class="desc">La misma información vive en la hoja «Registro de datos recabados» de la carpeta de la prueba, con su pestaña de conversaciones completas.</p>
+    <p class="desc">La misma información vive en la hoja «Registro de datos recabados» de la carpeta de la prueba: una pestaña por mes y otra con las conversaciones completas de los casos canalizados.</p>
     <iframe class="hoja" title="Registro de datos recabados" src="https://docs.google.com/spreadsheets/d/1pYNF2pKduibqp71Z8O5pgwm0z_8XOrqNfaomJgpwArk/edit?usp=sharing"></iframe>
     <div class="fila" style="margin-top:14px">
       <a class="boton claro" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1pYNF2pKduibqp71Z8O5pgwm0z_8XOrqNfaomJgpwArk/edit?usp=sharing">Abrir la hoja en Drive</a>
@@ -315,123 +292,12 @@
 <footer>Instituto Juventud · Panel de Admisiones de la prueba del asistente virtual · Para mayor información, contáctanos.</footer>
 
 <script>
-(function(){
-  var API = "https://ak.aracknia.com/mensajes?limite=300";
-  var claveEl = document.getElementById('clave');
-  var estadoEl = document.getElementById('estado');
-  var tablero = document.getElementById('tablero');
-  var btnPdf = document.getElementById('btn-pdf');
-  var datos = null;
-
-  function fechaMx(iso){
-    try { return new Date(iso).toLocaleString('es-MX',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
-    catch(e){ return iso || ''; }
-  }
-  function canalBonito(c){
-    if(c === 'whatsapp') return 'WhatsApp';
-    if(c === 'facebook') return 'Facebook';
-    if(c === 'web') return 'Web';
-    return c || '';
-  }
-  function esc(s){
-    return String(s == null ? '' : s).replace(/[&<>"']/g, function(ch){
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];
-    });
-  }
-
-  function render(){
-    if(!datos) return;
-    var regs = datos.filter(function(m){ return m.tipo === 'registro' && !m.dueno; });
-    var cans = datos.filter(function(m){ return m.tipo === 'canalizacion'; });
-    var convs = datos.filter(function(m){ return m.tipo === 'text' && !m.dueno; }).slice(-30).reverse();
-
-    document.getElementById('st-total').textContent = regs.length;
-    document.getElementById('st-wa').textContent = regs.filter(function(r){return r.canal==='whatsapp';}).length;
-    document.getElementById('st-fb').textContent = regs.filter(function(r){return r.canal==='facebook';}).length;
-    document.getElementById('st-web').textContent = regs.filter(function(r){return r.canal==='web';}).length;
-    document.getElementById('st-can').textContent = cans.length;
-    document.getElementById('rep-fecha').textContent = 'Generado el ' + new Date().toLocaleString('es-MX') + ' · Fuente: registro del asistente (WhatsApp, Facebook y web).';
-
-    var tb = document.getElementById('tb-interesados');
-    if(!regs.length){ tb.innerHTML = '<tr><td colspan="6">Sin interesados registrados todavía.</td></tr>'; }
-    else {
-      tb.innerHTML = regs.slice().reverse().map(function(r){
-        return '<tr><td>'+esc(fechaMx(r.fecha))+'</td><td>'+esc(canalBonito(r.canal))+'</td><td>'+esc(r.nombre || '')+'</td><td>'+esc(r.contacto || r.wa_id || '')+'</td><td>'+esc(r.nivel || '')+'</td><td>'+esc(r.texto || '')+'</td></tr>';
-      }).join('');
-    }
-
-    var lc = document.getElementById('lista-canalizaciones');
-    if(!cans.length){ lc.innerHTML = '<p class="desc">Sin canalizaciones todavía.</p>'; }
-    else {
-      lc.innerHTML = cans.slice().reverse().map(function(c){
-        var texto = '';
-        try {
-          var hist = JSON.parse(c.conversacion || '[]');
-          texto = hist.map(function(m){ return (m.rol === 'usuario' ? 'Interesado: ' : 'Asistente: ') + (m.texto || ''); }).join('\n');
-        } catch(e){ texto = c.conversacion || ''; }
-        return '<p style="margin:12px 0 0"><b>'+esc(fechaMx(c.fecha))+'</b> · '+esc(canalBonito(c.canal))+' · '+esc(c.wa_id || '')+'</p><div class="conv">'+esc(texto)+'</div>';
-      }).join('');
-    }
-
-    var tc = document.getElementById('tb-conversaciones');
-    if(!convs.length){ tc.innerHTML = '<tr><td colspan="4">Sin conversaciones todavía.</td></tr>'; }
-    else {
-      tc.innerHTML = convs.map(function(m){
-        return '<tr><td>'+esc(fechaMx(m.fecha))+'</td><td>'+esc(canalBonito(m.canal))+'</td><td>'+esc(m.texto || '')+'</td><td>'+esc(m.respuesta_enviada || '')+'</td></tr>';
-      }).join('');
-    }
-    tablero.classList.remove('oculto');
-    btnPdf.classList.remove('oculto');
-    poblarNiveles();
-    analizar();
-  }
-
-  function cargar(){
-    var clave = (claveEl.value || '').trim() || sessionStorage.getItem('admisiones_clave') || '';
-    if(!clave){ estadoEl.textContent = 'Escribe la clave del panel.'; estadoEl.className = 'estado error'; return; }
-    estadoEl.textContent = 'Cargando…'; estadoEl.className = 'estado';
-    fetch(API, { headers: { 'X-Report-Secret': clave } })
-      .then(function(r){ if(!r.ok) throw new Error('http ' + r.status); return r.json(); })
-      .then(function(d){
-        sessionStorage.setItem('admisiones_clave', clave);
-        datos = d.mensajes || [];
-        estadoEl.textContent = 'Datos actualizados: ' + datos.length + ' registros del asistente.';
-        render();
-      })
-      .catch(function(e){
-        estadoEl.textContent = 'No se pudo cargar. Revisa que la clave esté bien escrita e inténtalo de nuevo.';
-        estadoEl.className = 'estado error';
-      });
-  }
-
-
-  /* ---------------- Análisis estilo Power BI ---------------- */
+  var RESUMEN = null;
+  var canalSel = '';
   var COLORES = { whatsapp: '#009945', facebook: '#1877f2', web: '#d9a400' };
-  var fCanal = '', fNivel = '', fDias = 14;
+  var NOMBRES = { whatsapp: 'WhatsApp', facebook: 'Facebook', web: 'Web' };
 
-  function poblarNiveles(){
-    var sel = document.getElementById('f-nivel');
-    var actual = sel.value;
-    var niveles = {};
-    (datos || []).forEach(function(m){ if(m.tipo === 'registro' && m.nivel) niveles[m.nivel] = true; });
-    sel.innerHTML = '<option value="">Todos los niveles</option>' + Object.keys(niveles).sort().map(function(n){
-      return '<option value="' + esc(n) + '">' + esc(n) + '</option>';
-    }).join('');
-    sel.value = actual || '';
-    fNivel = sel.value;
-  }
-
-  function enPeriodo(m){
-    if(!fDias) return true;
-    var t = m.timestamp || Date.parse(m.fecha || '');
-    if(!t) return true;
-    return t >= Date.now() - fDias * 24 * 60 * 60 * 1000;
-  }
-  function pasaFiltros(m, conCanal, conNivel){
-    if(conCanal && fCanal && m.canal !== fCanal) return false;
-    if(conNivel && fNivel && (m.nivel || '') !== fNivel) return false;
-    return enPeriodo(m);
-  }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
   function dona(segs, total){
     var r = 54, c = 2 * Math.PI * r, acc = 0, partes = '';
@@ -448,7 +314,7 @@
   }
 
   function barrasHtml(filas, colorFn){
-    if(!filas.length) return '<p class="desc">Sin datos en este corte.</p>';
+    if(!filas.length) return '<p class="desc">Sin datos todavía.</p>';
     var max = Math.max.apply(null, filas.map(function(f){ return f.valor; }).concat([1]));
     return filas.map(function(f){
       var pct = Math.round(f.valor / max * 100);
@@ -458,90 +324,112 @@
     }).join('');
   }
 
-  function analizar(){
-    if(!datos) return;
-    var base = datos.filter(function(m){ return !m.dueno; });
-    var regs = base.filter(function(m){ return m.tipo === 'registro' && pasaFiltros(m, true, true); });
+  function pintar(){
+    if(!RESUMEN) return;
+    var T = RESUMEN.totales || { mensajes: 0, registros: 0, canalizaciones: 0 };
+    var PC = RESUMEN.porCanal || { whatsapp: 0, facebook: 0, web: 0 };
+    document.getElementById('st-total').textContent = T.registros;
+    document.getElementById('st-wa').textContent = PC.whatsapp || 0;
+    document.getElementById('st-fb').textContent = PC.facebook || 0;
+    document.getElementById('st-web').textContent = PC.web || 0;
+    document.getElementById('st-can').textContent = T.canalizaciones;
+    document.getElementById('rep-fecha').textContent = 'Instituto Juventud del Estado de México · ' + new Date().toLocaleDateString('es-MX', { dateStyle: 'long' });
 
-    /* Donut por canal (respeta nivel y periodo) */
-    var porCanal = { whatsapp: 0, facebook: 0, web: 0 };
-    base.filter(function(m){ return m.tipo === 'registro' && pasaFiltros(m, false, true); })
-        .forEach(function(m){ if(porCanal[m.canal] != null) porCanal[m.canal]++; });
-    var totalCanal = porCanal.whatsapp + porCanal.facebook + porCanal.web;
+    /* Sparkline: registros por día, últimos 14 días con datos o calendario */
+    var porDia = RESUMEN.porDia || [];
+    var mapaDia = {};
+    porDia.forEach(function(d){ mapaDia[d.fecha] = d; });
+    var serie = [];
+    for(var i = 13; i >= 0; i--){
+      var f = new Date(); f.setHours(0,0,0,0); f.setDate(f.getDate() - i);
+      var clave = f.toISOString().slice(0, 10);
+      serie.push(mapaDia[clave] ? mapaDia[clave].registros : 0);
+    }
+    var maxSp = Math.max.apply(null, serie.concat([1]));
+    var pts = serie.map(function(v, idx){ return (idx / 13 * 100).toFixed(1) + ',' + (26 - v / maxSp * 22).toFixed(1); }).join(' ');
+    document.getElementById('spark-total').innerHTML = '<polyline points="' + pts + '" fill="none" stroke="#1d2b4d" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+
+    /* Dona por canal */
+    var totalCanal = (PC.whatsapp || 0) + (PC.facebook || 0) + (PC.web || 0);
     document.getElementById('g-canal').innerHTML = dona([
-      { valor: porCanal.whatsapp, color: COLORES.whatsapp },
-      { valor: porCanal.facebook, color: COLORES.facebook },
-      { valor: porCanal.web, color: COLORES.web }
+      { valor: PC.whatsapp || 0, color: COLORES.whatsapp },
+      { valor: PC.facebook || 0, color: COLORES.facebook },
+      { valor: PC.web || 0, color: COLORES.web }
     ], totalCanal);
     document.getElementById('g-canal-leyenda').innerHTML =
-      '<span><i style="background:' + COLORES.whatsapp + '"></i>WhatsApp · ' + porCanal.whatsapp + '</span>' +
-      '<span><i style="background:' + COLORES.facebook + '"></i>Facebook · ' + porCanal.facebook + '</span>' +
-      '<span><i style="background:' + COLORES.web + '"></i>Web · ' + porCanal.web + '</span>';
+      '<span><i style="background:' + COLORES.whatsapp + '"></i>WhatsApp · ' + (PC.whatsapp || 0) + '</span>' +
+      '<span><i style="background:' + COLORES.facebook + '"></i>Facebook · ' + (PC.facebook || 0) + '</span>' +
+      '<span><i style="background:' + COLORES.web + '"></i>Web · ' + (PC.web || 0) + '</span>';
 
-    /* Barras por nivel (respeta canal y periodo) */
-    var porNivel = {};
-    base.filter(function(m){ return m.tipo === 'registro' && pasaFiltros(m, true, false); })
-        .forEach(function(m){ var n = m.nivel || 'Sin especificar'; porNivel[n] = (porNivel[n] || 0) + 1; });
-    var filasNivel = Object.keys(porNivel).map(function(n){ return { nombre: n, valor: porNivel[n] }; })
+    /* Nivel (según el canal elegido) */
+    var fuenteNivel = {};
+    if(canalSel && RESUMEN.porNivelCanal){
+      Object.keys(RESUMEN.porNivelCanal).forEach(function(n){
+        var v = RESUMEN.porNivelCanal[n][canalSel] || 0;
+        if(v) fuenteNivel[n] = v;
+      });
+      document.getElementById('g-nivel-sub').textContent = 'El nivel que más se pide en ' + NOMBRES[canalSel];
+    } else {
+      fuenteNivel = RESUMEN.porNivel || {};
+      document.getElementById('g-nivel-sub').textContent = 'El nivel que más se pide';
+    }
+    var filasNivel = Object.keys(fuenteNivel).map(function(n){ return { nombre: n, valor: fuenteNivel[n] }; })
       .sort(function(a, b){ return b.valor - a.valor; });
     document.getElementById('g-nivel').innerHTML = barrasHtml(filasNivel, function(){ return '#1d2b4d'; });
 
-    /* Actividad por día (respeta canal) */
-    var dias = fDias || 30;
-    var conteo = {}, orden = [];
-    for(var i = dias - 1; i >= 0; i--){
-      var d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() - i);
-      var clave = d.toISOString().slice(0, 10);
-      conteo[clave] = 0; orden.push({ clave: clave, etiqueta: d.getDate() + '/' + (d.getMonth() + 1) });
+    /* Actividad por día */
+    var nDias = parseInt(document.getElementById('f-dias').value, 10) || 14;
+    var columnas = '';
+    var maxDia = 1;
+    var diasVista = [];
+    for(var j = nDias - 1; j >= 0; j--){
+      var d2 = new Date(); d2.setHours(0,0,0,0); d2.setDate(d2.getDate() - j);
+      var c2 = d2.toISOString().slice(0, 10);
+      var reg = mapaDia[c2] || { mensajes: 0, registros: 0, canalizaciones: 0 };
+      var tot = reg.mensajes + reg.registros + reg.canalizaciones;
+      diasVista.push({ etiqueta: d2.getDate() + '/' + (d2.getMonth() + 1), valor: tot });
+      if(tot > maxDia) maxDia = tot;
     }
-    base.filter(function(m){ return pasaFiltros(m, true, false); }).forEach(function(m){
-      var f = (m.fecha || '').slice(0, 10);
-      if(conteo[f] != null) conteo[f]++;
-    });
-    var maxDia = Math.max.apply(null, orden.map(function(o){ return conteo[o.clave]; }).concat([1]));
-    document.getElementById('g-dias').innerHTML = orden.map(function(o, idx){
-      var v = conteo[o.clave];
-      var alto = Math.max(4, Math.round(v / maxDia * 96));
-      var etiqueta = (orden.length <= 14 || idx % 3 === 0) ? o.etiqueta : '';
-      return '<div class="columna"><span class="num">' + (v || '') + '</span><div class="col" style="height:' + alto + 'px"></div><span class="dia">' + etiqueta + '</span></div>';
+    columnas = diasVista.map(function(dv, idx){
+      var alto = Math.max(4, Math.round(dv.valor / maxDia * 96));
+      var etiqueta = (diasVista.length <= 14 || idx % 3 === 0) ? dv.etiqueta : '';
+      return '<div class="columna"><span class="num">' + (dv.valor || '') + '</span><div class="col" style="height:' + alto + 'px"></div><span class="dia">' + etiqueta + '</span></div>';
     }).join('');
+    document.getElementById('g-dias').innerHTML = columnas;
 
     /* Embudo */
-    var mensajes = base.filter(function(m){ return m.tipo === 'text' && pasaFiltros(m, true, false); }).length;
-    var canalizaciones = base.filter(function(m){ return m.tipo === 'canalizacion' && pasaFiltros(m, true, false); }).length;
     document.getElementById('g-embudo').innerHTML = barrasHtml([
-      { nombre: 'Mensajes recibidos', valor: mensajes },
-      { nombre: 'Interesados registrados', valor: regs.length },
-      { nombre: 'Casos canalizados', valor: canalizaciones }
+      { nombre: 'Mensajes recibidos', valor: T.mensajes },
+      { nombre: 'Interesados registrados', valor: T.registros },
+      { nombre: 'Casos canalizados', valor: T.canalizaciones }
     ], function(f){ return f.nombre === 'Casos canalizados' ? '#e2231a' : (f.nombre === 'Interesados registrados' ? '#009945' : '#1d2b4d'); });
 
-    /* Sparkline: interesados por día (14 días) */
-    var sp = document.getElementById('spark-total');
-    if(sp){
-      var porDia = [];
-      for(var sd = 13; sd >= 0; sd--){
-        var dd = new Date(); dd.setHours(0,0,0,0); dd.setDate(dd.getDate() - sd);
-        var claveD = dd.toISOString().slice(0, 10), n = 0;
-        base.forEach(function(m){ if(m.tipo === 'registro' && pasaFiltros(m, true, true) && (m.fecha || '').slice(0, 10) === claveD) n++; });
-        porDia.push(n);
-      }
-      var maxSp = Math.max.apply(null, porDia.concat([1]));
-      var pts = porDia.map(function(v, i){ return (i / 13 * 100).toFixed(1) + ',' + (26 - v / maxSp * 22).toFixed(1); }).join(' ');
-      sp.innerHTML = '<polyline points="' + pts + '" fill="none" stroke="#1d2b4d" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
-    }
+    /* Registros por mes */
+    var PM = RESUMEN.porMes || {};
+    var filasMes = Object.keys(PM).sort().map(function(m){
+      var partes = m.split('-');
+      var nombreMes = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][parseInt(partes[1], 10) - 1] + ' ' + partes[0];
+      return { nombre: nombreMes, valor: PM[m] };
+    });
+    document.getElementById('g-mes').innerHTML = barrasHtml(filasMes, function(){ return '#b8912a'; });
 
     /* Hallazgos */
     var hallazgos = [];
     if(totalCanal){
-      var dom = Object.keys(porCanal).sort(function(a, b){ return porCanal[b] - porCanal[a]; })[0];
-      hallazgos.push('El canal que más interesados trae es <b>' + canalBonito(dom) + '</b>, con el ' + Math.round(porCanal[dom] / totalCanal * 100) + '% de los registros.');
+      var dom = Object.keys(PC).sort(function(a, b){ return (PC[b] || 0) - (PC[a] || 0); })[0];
+      hallazgos.push('El canal que más interesados trae es <b>' + NOMBRES[dom] + '</b>, con el ' + Math.round((PC[dom] || 0) / totalCanal * 100) + '% de los registros.');
     }
-    if(filasNivel.length) hallazgos.push('El nivel más pedido es <b>' + esc(filasNivel[0].nombre) + '</b> (' + filasNivel[0].valor + ' de ' + regs.length + ' registros en el corte).');
-    var mejor = orden.slice().sort(function(a, b){ return conteo[b.clave] - conteo[a.clave]; })[0];
-    if(mejor && conteo[mejor.clave]) hallazgos.push('El día con más actividad fue el <b>' + mejor.etiqueta + '</b>, con ' + conteo[mejor.clave] + ' mensajes.');
-    if(mensajes) hallazgos.push('De cada 100 mensajes, <b>' + Math.round(regs.length / mensajes * 100) + '</b> terminan en un interesado registrado.');
-    if(canalizaciones) hallazgos.push('Se canalizaron <b>' + canalizaciones + '</b> casos a atención personal: el asistente deriva lo que no debe responder solo.');
-    if(!hallazgos.length) hallazgos.push('Aún no hay datos suficientes en este corte para sacar conclusiones.');
+    var filasNivelGlobal = Object.keys(RESUMEN.porNivel || {}).map(function(n){ return { nombre: n, valor: RESUMEN.porNivel[n] }; }).sort(function(a, b){ return b.valor - a.valor; });
+    if(filasNivelGlobal.length) hallazgos.push('El nivel más pedido es <b>' + esc(filasNivelGlobal[0].nombre) + '</b>, con ' + filasNivelGlobal[0].valor + ' de ' + T.registros + ' registros.');
+    var mejorDia = null, mejorTot = 0;
+    porDia.forEach(function(d){
+      var t = d.mensajes + d.registros + d.canalizaciones;
+      if(t > mejorTot){ mejorTot = t; mejorDia = d; }
+    });
+    if(mejorDia) hallazgos.push('El día con más actividad fue el <b>' + mejorDia.fecha.slice(8, 10) + '/' + mejorDia.fecha.slice(5, 7) + '</b>, con ' + mejorTot + ' movimientos.');
+    if(T.mensajes) hallazgos.push('De cada 100 mensajes, <b>' + Math.round(T.registros / T.mensajes * 100) + '</b> terminan en un interesado registrado.');
+    if(T.canalizaciones) hallazgos.push('Se canalizaron <b>' + T.canalizaciones + '</b> casos a atención personal: el asistente deriva lo que no debe responder solo.');
+    if(!hallazgos.length) hallazgos.push('Aún no hay datos suficientes para sacar conclusiones.');
     document.getElementById('g-hallazgos').innerHTML = hallazgos.map(function(x){ return '<li>' + x + '</li>'; }).join('');
   }
 
@@ -550,19 +438,27 @@
     if(!b) return;
     this.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('activa'); });
     b.classList.add('activa');
-    fCanal = b.getAttribute('data-canal') || '';
-    analizar();
+    canalSel = b.getAttribute('data-canal') || '';
+    pintar();
   });
-  document.getElementById('f-nivel').addEventListener('change', function(){ fNivel = this.value; analizar(); });
-  document.getElementById('f-dias').addEventListener('change', function(){ fDias = parseInt(this.value, 10) || 0; analizar(); });
+  document.getElementById('f-dias').addEventListener('change', pintar);
+  document.getElementById('btn-pdf').addEventListener('click', function(){ window.print(); });
 
-  document.getElementById('btn-cargar').addEventListener('click', cargar);
-  claveEl.addEventListener('keydown', function(ev){ if(ev.key === 'Enter') cargar(); });
-  btnPdf.addEventListener('click', function(){ window.print(); });
-
-  var guardada = sessionStorage.getItem('admisiones_clave');
-  if(guardada){ claveEl.value = guardada; cargar(); }
-})();
+  fetch('https://ak.aracknia.com/resumen')
+    .then(function(r){ if(!r.ok) throw new Error('sin-resumen'); return r.json(); })
+    .then(function(j){
+      RESUMEN = j;
+      var T = j.totales || { registros: 0 };
+      document.getElementById('an-estado').textContent = T.registros
+        ? 'Totales actualizados: ' + T.registros + ' interesados registrados por el asistente.'
+        : 'Aún no hay registros: el análisis se irá llenando con los mensajes del asistente.';
+      pintar();
+    })
+    .catch(function(){
+      document.getElementById('an-estado').textContent = 'Aún no hay datos para mostrar: el análisis aparecerá aquí en cuanto el asistente reciba mensajes.';
+      RESUMEN = { totales: { mensajes: 0, registros: 0, canalizaciones: 0 }, porCanal: { whatsapp: 0, facebook: 0, web: 0 }, porNivel: {}, porNivelCanal: {}, porDia: [], porMes: {} };
+      pintar();
+    });
 </script>
 </body>
 </html>
