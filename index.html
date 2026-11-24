@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IJEM prueba — Instituto Juventud del Estado de México</title>
+<meta name="description" content="Sitio de demostración del Instituto Juventud del Estado de México con asistente conversacional de prueba.">
+<style>
+  :root{
+    --navy:#0d2137;
+    --navy-2:#12314f;
+    --sky:#38b6e8;
+    --gold:#f5b921;
+    --ink:#1c2733;
+    --muted:#5a6a78;
+    --paper:#ffffff;
+    --wash:#f2f6f9;
+    --line:#d9e3ea;
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+    color:var(--ink);
+    background:var(--wash);
+    line-height:1.55;
+  }
+  a{color:var(--navy-2)}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+
+  /* ---------- Encabezado ---------- */
+  .site-head{
+    background:var(--navy);
+    color:#fff;
+    border-bottom:4px solid var(--gold);
+  }
+  .site-head .wrap{
+    max-width:1180px;margin:0 auto;padding:14px 20px;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+  .brand-mark{
+    width:44px;height:44px;flex:0 0 44px;border-radius:8px;
+    background:var(--gold);color:var(--navy);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:.82rem;letter-spacing:.02em;
+  }
+  .brand strong{display:block;font-size:1.02rem;line-height:1.2}
+  .brand small{display:block;color:#bcd2e2;font-size:.8rem}
+  .demo-tag{
+    margin-left:auto;background:transparent;border:1px solid var(--sky);color:#cfeaf7;
+    padding:5px 12px;border-radius:999px;font-size:.78rem;letter-spacing:.04em;
+  }
+  .site-nav{display:flex;gap:4px;flex-wrap:wrap}
+  .site-nav a{
+    color:#e8f2f8;text-decoration:none;font-size:.92rem;
+    padding:7px 12px;border-radius:6px;
+  }
+  .site-nav a:hover{background:var(--navy-2)}
+
+  /* ---------- Héroe ---------- */
+  .hero{background:var(--paper);border-bottom:1px solid var(--line)}
+  .hero .wrap{
+    max-width:1180px;margin:0 auto;padding:44px 20px 36px;
+    display:grid;grid-template-columns:1.5fr 1fr;gap:36px;align-items:end;
+  }
+  .hero h1{
+    margin:0 0 10px;font-size:2.35rem;line-height:1.12;color:var(--navy);
+    letter-spacing:-.01em;font-weight:800;
+  }
+  .hero p.lede{margin:0;font-size:1.08rem;color:var(--muted);max-width:34rem}
+  .hero-side{
+    border-left:3px solid var(--gold);padding-left:18px;color:var(--muted);font-size:.95rem;
+  }
+  .hero-side strong{color:var(--navy);display:block;font-size:1rem;margin-bottom:4px}
+  .hero-actions{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{
+    display:inline-block;text-decoration:none;border-radius:8px;
+    padding:11px 18px;font-weight:600;font-size:.95rem;border:1px solid transparent;
+  }
+  .btn-main{background:var(--navy);color:#fff}
+  .btn-main:hover{background:var(--navy-2)}
+  .btn-ghost{background:#fff;color:var(--navy);border-color:var(--navy)}
+  .btn-ghost:hover{background:var(--wash)}
+
+  /* ---------- Secciones ---------- */
+  main{max-width:1180px;margin:0 auto;padding:8px 20px 48px}
+  section.block{padding:30px 0 6px}
+  section.block h2{
+    font-size:1.45rem;color:var(--navy);margin:0 0 6px;font-weight:750;
+  }
+  section.block .sub{color:var(--muted);margin:0 0 18px;max-width:44rem}
+  .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .level{
+    background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--sky);
+    border-radius:var(--radius);padding:18px;
+  }
+  .level:nth-child(2){border-top-color:var(--gold)}
+  .level:nth-child(3){border-top-color:var(--navy)}
+  .level h3{margin:0 0 6px;font-size:1.08rem;color:var(--navy)}
+  .level p{margin:0;color:var(--muted);font-size:.94rem}
+  .projects{display:grid;grid-template-columns:1fr 1fr;gap:0 34px}
+  .project{
+    display:grid;grid-template-columns:110px 1fr;gap:14px;
+    padding:14px 0;border-bottom:1px solid var(--line);
+  }
+  .project h3{margin:2px 0 0;font-size:1rem;color:var(--navy)}
+  .project p{margin:0;color:var(--muted);font-size:.94rem}
+  .faq details{
+    background:var(--paper);border:1px solid var(--line);border-radius:8px;
+    padding:12px 16px;margin-bottom:10px;
+  }
+  .faq summary{cursor:pointer;font-weight:600;color:var(--navy)}
+  .faq details p{margin:8px 0 2px;color:var(--muted)}
+  .edit-note{
+    background:#fff8e6;border:1px solid var(--gold);border-radius:8px;
+    padding:12px 16px;color:#6b5510;font-size:.92rem;margin-top:14px;
+  }
+
+  /* ---------- Chat ---------- */
+  .chat-shell{
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+    display:grid;grid-template-columns:280px 1fr;overflow:hidden;
+  }
+  .chat-side{
+    background:var(--navy);color:#dbe9f3;padding:20px;
+  }
+  .chat-side h3{margin:0 0 8px;color:#fff;font-size:1.05rem}
+  .chat-side p{margin:0 0 14px;font-size:.9rem;color:#bcd2e2}
+  .chip{
+    display:block;width:100%;text-align:left;margin:0 0 8px;
+    background:var(--navy-2);color:#eaf4fa;border:1px solid #26506f;
+    border-radius:8px;padding:9px 12px;font-size:.9rem;cursor:pointer;
+  }
+  .chip:hover{border-color:var(--sky)}
+  .chat-main{display:flex;flex-direction:column;min-height:430px}
+  .chat-log{
+    flex:1;padding:18px;overflow-y:auto;max-height:480px;
+    display:flex;flex-direction:column;gap:10px;background:#fbfcfd;
+  }
+  .msg{max-width:82%;padding:10px 14px;border-radius:12px;font-size:.95rem;white-space:pre-wrap}
+  .msg.bot{background:#e9f2f8;color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.user{background:var(--navy);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .chat-form{
+    display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);background:#fff;
+  }
+  .chat-form input{
+    flex:1;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:.95rem;min-width:0;
+  }
+  .chat-form button{
+    background:var(--gold);color:var(--navy);border:0;border-radius:8px;
+    padding:11px 18px;font-weight:700;cursor:pointer;font-size:.95rem;
+  }
+  .chat-form button:hover{background:#e3a812}
+  .lead-bar{
+    display:none;padding:10px 14px;border-top:1px solid var(--line);background:#fff8e6;
+    font-size:.9rem;color:#6b5510;gap:10px;align-items:center;flex-wrap:wrap;
+  }
+  .lead-bar.show{display:flex}
+  .lead-bar button{
+    background:var(--navy);color:#fff;border:0;border-radius:6px;padding:7px 12px;cursor:pointer;font-weight:600;
+  }
+
+  footer{
+    background:var(--navy);color:#bcd2e2;margin-top:10px;
+  }
+  footer .wrap{max-width:1180px;margin:0 auto;padding:22px 20px;font-size:.9rem}
+  footer strong{color:#fff}
+
+  @media (max-width:900px){
+    .hero .wrap{grid-template-columns:1fr}
+    .levels{grid-template-columns:1fr}
+    .projects{grid-template-columns:1fr}
+    .chat-shell{grid-template-columns:1fr}
+    .chat-side{order:2}
+  }
+  @media (max-width:480px){
+    .hero h1{font-size:1.8rem}
+    .project{grid-template-columns:1fr;gap:4px}
+    .demo-tag{margin-left:0}
+    .msg{max-width:94%}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#inicio">
+      <span class="brand-mark">IJEM</span>
+      <span>
+        <strong>Instituto Juventud del Estado de México</strong>
+        <small>Secundaria · Preparatoria · Innovación educativa</small>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="#niveles">Niveles</a>
+      <a href="#innovacion">Innovación</a>
+      <a href="#preguntas">Preguntas frecuentes</a>
+      <a href="#asistente">Asistente</a>
+    </nav>
+    <span class="demo-tag">Sitio de demostración</span>
+  </div>
+</header>
+
+<div class="hero" id="inicio">
+  <div class="wrap">
+    <div>
+      <h1>Una escuela que también construye su propia tecnología</h1>
+      <p class="lede">El Instituto Juventud del Estado de México atiende secundaria y preparatoria, y desde su Departamento de Innovación Educativa crea las plataformas, tutores y videojuegos que usa su propia comunidad.</p>
+      <div class="hero-actions">
+        <a class="btn btn-main" href="#asistente">Preguntar al asistente</a>
+        <a class="btn btn-ghost" href="#innovacion">Ver los proyectos</a>
+      </div>
+    </div>
+    <div class="hero-side">
+      <strong>Filosofía Josefina</strong>
+      «Hacer siempre y en todo lo mejor.» Educar con propósito, pensar con libertad, sentir con profundidad y actuar con responsabilidad.
+    </div>
+  </div>
+</div>
+
+<main>
+  <section class="block" id="niveles">
+    <h2>Niveles</h2>
+    <p class="sub">Tres comunidades, una misma casa. La información oficial de costos, fechas y requisitos la confirma cada área; este sitio de prueba no la inventa.</p>
+    <div class="levels">
+      <article class="level">
+        <h3>Secundaria</h3>
+        <p>Formación de adolescentes con acompañamiento cercano y vida escolar activa: torneos de Esports, club de ajedrez y proyectos digitales.</p>
+      </article>
+      <article class="level">
+        <h3>Preparatoria</h3>
+        <p>Grupos de 4º, 5º y 6º. Entre sus asignaturas están Lógica, Ética, Derecho e IECSE, con tutores de inteligencia artificial propios (Ju-bits).</p>
+      </article>
+      <article class="level">
+        <h3>Primaria Josefina</h3>
+        <p>La primaria vinculada al instituto, con su agenda propia y los acompañantes digitales de Ju-bits Kids para aprender en familia.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="block" id="innovacion">
+    <h2>Innovación educativa</h2>
+    <p class="sub">Proyectos creados por el Departamento de Innovación Educativa (DIE) y el Centro de Innovación e Investigación Juventud (CIIJ), dirigidos por el profe Adrian Rivera.</p>
+    <div class="projects">
+      <article class="project">
+        <h3>Ag Lucem</h3>
+        <p>La plataforma interna del instituto: agenda, horario, proyectos, realidad aumentada y Esports, con cuenta personal para cada alumno y docente.</p>
+      </article>
+      <article class="project">
+        <h3>Ju-bits</h3>
+        <p>Tutores con inteligencia artificial para preparatoria que responden breve, una idea a la vez, con la Filosofía Josefina como base.</p>
+      </article>
+      <article class="project">
+        <h3>Ju-bits Kids</h3>
+        <p>Nueve acompañantes digitales por inteligencias múltiples para primaria, con puerta parental y filtros de contenido para menores.</p>
+      </article>
+      <article class="project">
+        <h3>Chema-tron</h3>
+        <p>Minijuegos retro hechos en el instituto —Chema Bird, Tetris, Avión Chema— con tablas de mejores puntuaciones.</p>
+      </article>
+      <article class="project">
+        <h3>Taller de IA</h3>
+        <p>Martes: herramientas de estudio con inteligencia artificial. Jueves: desarrollo de videojuegos con IA.</p>
+      </article>
+      <article class="project">
+        <h3>Esports</h3>
+        <p>Juve-Smash Secundaria en diciembre de 2026, Chema Cart en febrero de 2027 y Fut Juventud en abril de 2027.</p>
+      </article>
+      <article class="project">
+        <h3>Serch Education</h3>
+        <p>Buscador de escuelas cercanas al instituto, para que las familias localicen opciones por distancia, nivel y tipo.</p>
+      </article>
+      <article class="project">
+        <h3>Chemini</h3>
+        <p>Asistente de IA educativa local: libre, privado y gratuito, pensado para el aula sin depender de la nube.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="block faq" id="preguntas">
+    <h2>Preguntas frecuentes</h2>
+    <p class="sub">Las mismas respuestas que da el asistente. Donde veas un marcador, el dato oficial está pendiente de que la institución lo complete.</p>
+    <details>
+      <summary>¿Qué niveles tiene el IJEM?</summary>
+      <p>Secundaria y preparatoria, además de la primaria vinculada (Primaria Josefina).</p>
+    </details>
+    <details>
+      <summary>¿Cuánto cuesta la colegiatura?</summary>
+      <p>[EDITAR: costos oficiales]. Ese dato lo confirma el área administrativa; el asistente puede registrar tus datos para que te contacten.</p>
+    </details>
+    <details>
+      <summary>¿Cuándo son las inscripciones?</summary>
+      <p>[EDITAR: fechas oficiales de inscripción]. En cuanto la institución publique el calendario, el asistente lo tendrá actualizado.</p>
+    </details>
+    <details>
+      <summary>¿Qué actividades extracurriculares hay?</summary>
+      <p>El Taller de IA (martes y jueves), la liga de Esports con torneos como Juve-Smash, el club de ajedrez y los proyectos digitales del DIE.</p>
+    </details>
+    <div class="edit-note">Nota de la prueba: los datos marcados con [EDITAR] —dirección, teléfono, costos, fechas, requisitos y horarios oficiales— los completan las áreas del instituto antes de usar el asistente con el público.</div>
+  </section>
+
+  <section class="block" id="asistente">
+    <h2>Asistente del IJEM</h2>
+    <p class="sub">Prueba del bot conversacional. Responde desde la base de conocimiento del instituto y puede registrar tus datos para que un área te contacte. En esta demostración el registro se guarda solo en tu navegador.</p>
+    <div class="chat-shell">
+      <aside class="chat-side">
+        <h3>¿Por dónde empezamos?</h3>
+        <p>Toca una pregunta o escribe la tuya. El asistente no inventa datos oficiales: si algo está pendiente, te ofrece registrarte.</p>
+        <button class="chip" type="button" data-q="¿Qué niveles tiene el IJEM?">¿Qué niveles tiene el IJEM?</button>
+        <button class="chip" type="button" data-q="¿Cuánto cuesta la colegiatura?">¿Cuánto cuesta la colegiatura?</button>
+        <button class="chip" type="button" data-q="¿Cuándo son las inscripciones?">¿Cuándo son las inscripciones?</button>
+        <button class="chip" type="button" data-q="¿Qué es Ag Lucem?">¿Qué es Ag Lucem?</button>
+        <button class="chip" type="button" data-q="Quiero inscribir a mi hijo">Quiero inscribir a mi hijo/a</button>
+      </aside>
+      <div class="chat-main">
+        <div class="chat-log" id="chatLog" aria-live="polite"></div>
+        <div class="lead-bar" id="leadBar">
+          <span id="leadText">Registro listo.</span>
+          <button type="button" id="leadDownload">Descargar registro (CSV)</button>
+        </div>
+        <form class="chat-form" id="chatForm">
+          <input id="chatInput" type="text" placeholder="Escribe tu pregunta…" autocomplete="off" aria-label="Escribe tu pregunta">
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <strong>IJEM prueba</strong> — Sitio de demostración del Departamento de Innovación Educativa (DIE) del Instituto Juventud del Estado de México. No es el sitio oficial del instituto.
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ===== Base de conocimiento (la misma del documento en Drive) ===== */
+  var EDITAR = {
+    costos: "[EDITAR: costos oficiales]",
+    fechas: "[EDITAR: fechas oficiales de inscripción]",
+    requisitos: "[EDITAR: lista oficial de documentos y requisitos]",
+    direccion: "[EDITAR: dirección oficial del plantel]",
+    telefono: "[EDITAR: teléfono oficial]",
+    horarios: "[EDITAR: horarios por nivel y turno]"
+  };
+
+  var INTENTS = [
+    { keys:["ag lucem","aglucem","plataforma"],
+      reply:"Ag Lucem es la plataforma digital del instituto: agenda y enfoque personal, calendario y horario por cuenta, zona docente, un muro social seguro para estudiantes (solo apodos), organizador de proyectos, realidad aumentada y la sección de Esports. Cada alumno y docente tiene su propia cuenta." },
+    { keys:["ju-bits kids","jubits kids","kids","primaria josefina"],
+      reply:"Ju-bits Kids es la versión para primaria: nueve acompañantes digitales organizados por inteligencias múltiples, pensados para que madres, padres o tutores acompañen a los niños. Tiene puerta de seguridad parental y filtros de contenido para menores." },
+    { keys:["ju-bits","jubits","tutores","tutor de ia"],
+      reply:"Ju-bits son los tutores con inteligencia artificial para alumnos de preparatoria, creados por el Departamento de Innovación Educativa. Responden breve, una idea a la vez, con la Filosofía Josefina como base: «Hacer siempre y en todo lo mejor»." },
+    { keys:["chemini"],
+      reply:"Chemini es el asistente de inteligencia artificial educativa local del instituto: libre, privado y gratuito, pensado para trabajar en el aula sin depender de la nube (modelo CONSTRUYE)." },
+    { keys:["serch","buscar escuela","buscador de escuelas","escuelas cercanas"],
+      reply:"Serch Education es un buscador de escuelas cercanas al instituto, creado con la tecnología de los proyectos del DIE. Ayuda a las familias a localizar escuelas por distancia, nivel y tipo." },
+    { keys:["chema-tron","chematron","chema bird","minijuegos","videojuegos retro"],
+      reply:"Chema-tron es la tienda de minijuegos retro del instituto (Chema Bird, Tetris, Avión Chema y más), con tablas de mejores puntuaciones. Vive dentro de la sección de Esports de Ag Lucem." },
+    { keys:["esports","torneo","smash","juve-smash","chema cart","fut juventud","ajedrez"],
+      reply:"La liga de Esports del instituto organiza: Juve-Smash Secundaria (diciembre de 2026), Chema Cart (febrero de 2027) y Fut Juventud (abril de 2027). También hay club de ajedrez. En preparatoria, el Juve-Smash de noviembre de 2026 lo ganaron Manuel (1º), Cesar (2º) y Rodrigo y Jesús (3º)." },
+    { keys:["taller de ia","taller ia","curso de ia"],
+      reply:"El Taller de IA es para estudiantes: los martes se trabajan herramientas de estudio con inteligencia artificial y los jueves, desarrollo de videojuegos con IA." },
+    { keys:["die","ciij","innovacion","innovación","profe adrian","rivera","director"],
+      reply:"La innovación educativa del IJEM la lleva el Departamento de Innovación Educativa (DIE), dirigido por el profe Adrian Rivera Juvenal, fundador también del Centro de Innovación e Investigación Juventud (CIIJ) y docente de Filosofía en preparatoria." },
+    { keys:["filosofia josefina","filosofía josefina","josefina","lema","valores"],
+      reply:"La Filosofía Josefina guía a la comunidad del instituto. Su lema es «Hacer siempre y en todo lo mejor»: educar con propósito y transformar con amor, pensar con libertad, sentir con profundidad y actuar con responsabilidad." },
+    { keys:["niveles","secundaria","preparatoria","prepa","primaria","que tienen","qué tienen"],
+      reply:"El IJEM atiende secundaria y preparatoria (grupos de 4º, 5º y 6º, con asignaturas como Lógica, Ética, Derecho e IECSE). La primaria vinculada es la Primaria Josefina." },
+    { keys:["costo","cuesta","colegiatura","precio","mensualidad","pago"],
+      reply:"Los costos oficiales son: " + EDITAR.costos + ". Ese dato lo confirma directamente el área administrativa. Si me dejas tu nombre y un teléfono o correo, te contactan con la información oficial. Escribe «quiero registrarme» y tomo tus datos." },
+    { keys:["inscripcion","inscripción","inscripciones","cuando inscrib","fechas"],
+      reply:"Las fechas oficiales de inscripción son: " + EDITAR.fechas + ". En cuanto la institución publique el calendario, lo tendré actualizado. Si quieres, escribe «quiero registrarme» y te contactamos en cuanto se confirme." },
+    { keys:["requisitos","documentos","papeles","que necesito","qué necesito"],
+      reply:"Los requisitos oficiales son: " + EDITAR.requisitos + ". Déjame tu nombre y un contacto escribiendo «quiero registrarme» y el área correspondiente te confirma la lista completa." },
+    { keys:["ubicacion","ubicación","direccion","dirección","donde estan","dónde están","donde queda"],
+      reply:"La dirección oficial del plantel es: " + EDITAR.direccion + ". El teléfono oficial es: " + EDITAR.telefono + ". Te puedo ayudar mientras tanto con niveles, proyectos y actividades." },
+    { keys:["horario","horarios","turno","a que hora","a qué hora"],
+      reply:"Los horarios oficiales por nivel y turno son: " + EDITAR.horarios + ". Las clases de preparatoria se imparten en horario matutino." },
+    { keys:["telefono","teléfono","correo","contacto","contactar","hablar con"],
+      reply:"El teléfono oficial es: " + EDITAR.telefono + ". También puedes dejarme tu nombre, un teléfono o correo y tu mensaje escribiendo «quiero registrarme»: lo canalizo con el área correspondiente." },
+    { keys:["que es el ijem","qué es el ijem","instituto juventud","sobre el ijem","quienes son","quiénes son"],
+      reply:"El Instituto Juventud del Estado de México (IJEM) es una institución educativa con secundaria y preparatoria, y una primaria vinculada. Su Departamento de Innovación Educativa crea la tecnología que usa la comunidad: Ag Lucem, Ju-bits, Chema-tron y más." },
+    { keys:["extracurricular","actividades","talleres","clubs","clubes"],
+      reply:"Actividades que sí te puedo confirmar: el Taller de IA (martes, herramientas de estudio; jueves, videojuegos), la liga de Esports (Juve-Smash, Chema Cart, Fut Juventud), el club de ajedrez y los proyectos digitales del DIE." },
+    { keys:["hola","buenas","buenos dias","buenas tardes","hey"],
+      reply:"Hola, soy el asistente virtual del Instituto Juventud del Estado de México. Puedo darte información sobre secundaria, preparatoria, inscripciones y nuestros proyectos de innovación. ¿En qué te ayudo?" },
+    { keys:["gracias"],
+      reply:"Con gusto. Si necesitas algo más —niveles, inscripciones o proyectos— aquí sigo. Y si quieres que un área te contacte, escribe «quiero registrarme»." }
+  ];
+
+  var FALLBACK = "Eso todavía no lo tengo confirmado en mi base de conocimiento, y no quiero inventarte un dato oficial. Puedo registrar tu pregunta para que el área correspondiente te responda: escribe «quiero registrarme» y dejas tu nombre, un contacto y tu mensaje.";
+
+  /* ===== Registro de interesados (demo: se guarda en el navegador) ===== */
+  var lead = null;      // {nombre, contacto, nivel, mensaje}
+  var leadStep = 0;     // 0 = sin registro en curso
+  var lastLead = null;
+  var LEAD_STEPS = [
+    null,
+    "Claro, tomo tus datos para que el área correspondiente te contacte. ¿Cuál es tu nombre?",
+    "Gracias. ¿Un teléfono o correo donde contactarte?",
+    "¿Qué nivel te interesa: secundaria, preparatoria o primaria?",
+    "Por último, ¿cuál es tu mensaje o necesidad? (por ejemplo: informes de inscripción)"
+  ];
+
+  var log = document.getElementById("chatLog");
+  var form = document.getElementById("chatForm");
+  var input = document.getElementById("chatInput");
+  var leadBar = document.getElementById("leadBar");
+  var leadText = document.getElementById("leadText");
+
+  function addMsg(text, who){
+    var div = document.createElement("div");
+    div.className = "msg " + who;
+    div.textContent = text;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+  }
+  function botSay(text){
+    window.setTimeout(function(){ addMsg(text, "bot"); }, 220);
+  }
+
+  function normalize(s){
+    return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  }
+
+  function startLead(){
+    lead = { nombre:"", contacto:"", nivel:"", mensaje:"" };
+    leadStep = 1;
+    botSay(LEAD_STEPS[1]);
+  }
+
+  function handleLead(text){
+    if (leadStep === 1){ lead.nombre = text; }
+    if (leadStep === 2){ lead.contacto = text; }
+    if (leadStep === 3){ lead.nivel = text; }
+    if (leadStep === 4){
+      lead.mensaje = text;
+      lastLead = {
+        fecha: new Date().toLocaleString("es-MX"),
+        canal: "Chat web (demo)",
+        nombre: lead.nombre, contacto: lead.contacto,
+        nivel: lead.nivel, mensaje: lead.mensaje, estado: "Nuevo"
+      };
+      try {
+        var prev = JSON.parse(window.localStorage.getItem("ijem_registros") || "[]");
+        prev.push(lastLead);
+        window.localStorage.setItem("ijem_registros", JSON.stringify(prev));
+      } catch(e){ /* almacenamiento no disponible: el registro sigue visible en pantalla */ }
+      leadStep = 0; lead = null;
+      leadText.textContent = "Registro listo: " + lastLead.nombre + " · " + lastLead.nivel + ". En la operación real se guarda en la hoja «Registro de datos recabados» de Drive.";
+      leadBar.classList.add("show");
+      botSay("Listo, " + lastLead.nombre + ". Registré tus datos (" + lastLead.nivel + ") y tu mensaje. El área correspondiente te contactará con la información oficial. ¿Algo más en lo que te ayude?");
+      return;
+    }
+    leadStep += 1;
+    botSay(LEAD_STEPS[leadStep]);
+  }
+
+  function answer(text){
+    var t = normalize(text);
+    if (leadStep > 0){ handleLead(text); return; }
+    if (t.indexOf("registr") !== -1 || t.indexOf("inscribir") !== -1 || t.indexOf("inscribo") !== -1 || t.indexOf("quiero informacion") !== -1){
+      startLead(); return;
+    }
+    for (var i = 0; i < INTENTS.length; i++){
+      var intent = INTENTS[i];
+      for (var j = 0; j < intent.keys.length; j++){
+        if (t.indexOf(normalize(intent.keys[j])) !== -1){
+          botSay(intent.reply); return;
+        }
+      }
+    }
+    botSay(FALLBACK);
+  }
+
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var text = input.value.trim();
+    if (!text){ return; }
+    addMsg(text, "user");
+    input.value = "";
+    answer(text);
+  });
+
+  var chips = document.querySelectorAll(".chip");
+  for (var c = 0; c < chips.length; c++){
+    chips[c].addEventListener("click", function(){
+      var q = this.getAttribute("data-q");
+      addMsg(q, "user");
+      answer(q);
+    });
+  }
+
+  document.getElementById("leadDownload").addEventListener("click", function(){
+    if (!lastLead){ return; }
+    var row = [lastLead.fecha, lastLead.canal, lastLead.nombre, lastLead.contacto, lastLead.nivel, lastLead.mensaje, lastLead.estado]
+      .map(function(v){ return '"' + String(v).replace(/"/g, '""') + '"'; }).join(",");
+    var csv = "Fecha,Canal,Nombre,Contacto,Nivel de interés,Mensaje o necesidad,Estado\n" + row + "\n";
+    var blob = new Blob([csv], { type:"text/csv;charset=utf-8" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "registro-ijem.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  });
+
+  addMsg("Hola, soy el asistente virtual del Instituto Juventud del Estado de México. ¿En qué te ayudo? Puedo darte información sobre secundaria, preparatoria, inscripciones y nuestros proyectos de innovación.", "bot");
+})();
+</script>
+</body>
+</html>
