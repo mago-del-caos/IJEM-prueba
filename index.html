@@ -3,329 +3,559 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IJEM prueba — Instituto Juventud del Estado de México</title>
-<meta name="description" content="Sitio de demostración del Instituto Juventud del Estado de México con asistente conversacional de prueba.">
+<title>Instituto Juventud | Ad Lucem (demostración)</title>
+<meta name="description" content="Página de demostración: clon de la página principal del Instituto Juventud del Estado de México para probar el asistente virtual desplegable.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#0d2137;
-    --navy-2:#12314f;
-    --sky:#38b6e8;
-    --gold:#f5b921;
-    --ink:#1c2733;
-    --muted:#5a6a78;
+    --navy:#1d2b4d;
+    --navy-dark:#131e38;
+    --red:#e2231a;
+    --red-dark:#bc0c06;
+    --green:#009945;
+    --yellow:#ffd100;
+    --ink:#333333;
+    --muted:#666666;
     --paper:#ffffff;
-    --wash:#f2f6f9;
-    --line:#d9e3ea;
-    --radius:10px;
+    --wash:#f7f7f7;
+    --line:#e2e2e2;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
     margin:0;
-    font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-family:"Open Sans",Helvetica,Arial,sans-serif;
     color:var(--ink);
-    background:var(--wash);
-    line-height:1.55;
+    background-color:var(--wash);
+    background-image:url("assets/fondo-body.jpg");
+    background-repeat:repeat;
+    line-height:1.6;
+    font-size:16px;
   }
-  a{color:var(--navy-2)}
-  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+  h1,h2,h3,h4{font-family:"Raleway",Helvetica,Arial,sans-serif;color:var(--navy);margin:0}
+  a{color:var(--green)}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+  img{max-width:100%}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
-  /* ---------- Encabezado ---------- */
+  /* ---------- Franja de demostración ---------- */
+  .demo-strip{
+    background:#0b1526;color:#dbe4f2;text-align:center;
+    font-size:.8rem;letter-spacing:.02em;padding:7px 14px;
+  }
+  .demo-strip strong{color:var(--yellow);font-weight:700}
+
+  /* ---------- Barra superior (contacto) ---------- */
+  .topbar{background:var(--navy);color:#fff;font-size:.82rem}
+  .topbar .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+  .topbar .phones{display:flex;gap:18px;flex-wrap:wrap}
+  .topbar .phones b{color:var(--yellow);font-weight:600}
+  .topbar .right{margin-left:auto;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .topbar a{color:#fff;text-decoration:none}
+  .topbar a:hover{color:var(--yellow)}
+  .topbar .follow{letter-spacing:.08em;font-weight:600}
+
+  /* ---------- Encabezado principal ---------- */
   .site-head{
-    background:var(--navy);
-    color:#fff;
-    border-bottom:4px solid var(--gold);
+    background:#fff;position:sticky;top:0;z-index:900;
+    box-shadow:0 2px 10px rgba(29,43,77,.12);
   }
-  .site-head .wrap{
-    max-width:1180px;margin:0 auto;padding:14px 20px;
-    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  .site-head .wrap{display:flex;align-items:center;gap:20px;padding-top:10px;padding-bottom:10px}
+  .brand{display:flex;align-items:center;text-decoration:none}
+  .brand img{height:64px;width:auto;display:block}
+  .main-nav{margin-left:auto}
+  .main-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:2px;align-items:center}
+  .main-nav a{
+    display:block;padding:10px 13px;text-decoration:none;
+    font-family:"Raleway",sans-serif;font-weight:700;font-size:.86rem;letter-spacing:.03em;
+    color:var(--navy);text-transform:uppercase;white-space:nowrap;
   }
-  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
-  .brand-mark{
-    width:44px;height:44px;flex:0 0 44px;border-radius:8px;
-    background:var(--gold);color:var(--navy);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:800;font-size:.82rem;letter-spacing:.02em;
+  .main-nav a:hover{color:var(--red)}
+  .main-nav .has-sub{position:relative}
+  .main-nav .sub{
+    position:absolute;left:0;top:100%;min-width:210px;background:#fff;
+    box-shadow:0 10px 24px rgba(29,43,77,.18);border-top:3px solid var(--red);
+    display:none;flex-direction:column;padding:8px 0;z-index:950;
   }
-  .brand strong{display:block;font-size:1.02rem;line-height:1.2}
-  .brand small{display:block;color:#bcd2e2;font-size:.8rem}
-  .demo-tag{
-    margin-left:auto;background:transparent;border:1px solid var(--sky);color:#cfeaf7;
-    padding:5px 12px;border-radius:999px;font-size:.78rem;letter-spacing:.04em;
+  .main-nav .has-sub:hover .sub,.main-nav .has-sub:focus-within .sub{display:flex}
+  .main-nav .sub a{text-transform:none;font-size:.92rem;font-weight:600;padding:9px 18px}
+  .nav-toggle{
+    display:none;margin-left:auto;background:var(--navy);color:#fff;border:0;border-radius:8px;
+    width:44px;height:44px;cursor:pointer;align-items:center;justify-content:center;
   }
-  .site-nav{display:flex;gap:4px;flex-wrap:wrap}
-  .site-nav a{
-    color:#e8f2f8;text-decoration:none;font-size:.92rem;
-    padding:7px 12px;border-radius:6px;
-  }
-  .site-nav a:hover{background:var(--navy-2)}
+  .nav-toggle svg{width:24px;height:24px}
 
-  /* ---------- Héroe ---------- */
-  .hero{background:var(--paper);border-bottom:1px solid var(--line)}
-  .hero .wrap{
-    max-width:1180px;margin:0 auto;padding:44px 20px 36px;
-    display:grid;grid-template-columns:1.5fr 1fr;gap:36px;align-items:end;
+  /* ---------- Héroe (slider) ---------- */
+  .hero{position:relative;background:var(--navy-dark);overflow:hidden}
+  .hero-slide{
+    position:absolute;inset:0;opacity:0;transition:opacity 1s ease;pointer-events:none;
+    background-size:cover;background-position:center;
+    display:flex;align-items:flex-end;
   }
-  .hero h1{
-    margin:0 0 10px;font-size:2.35rem;line-height:1.12;color:var(--navy);
-    letter-spacing:-.01em;font-weight:800;
+  .hero-slide.active{opacity:1;position:relative;pointer-events:auto}
+  .hero-slide::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(78deg,rgba(19,30,56,.78) 0%,rgba(19,30,56,.35) 55%,rgba(19,30,56,.05) 100%);
   }
-  .hero p.lede{margin:0;font-size:1.08rem;color:var(--muted);max-width:34rem}
-  .hero-side{
-    border-left:3px solid var(--gold);padding-left:18px;color:var(--muted);font-size:.95rem;
+  .hero-inner{position:relative;width:100%;padding:120px 0 84px}
+  .hero-kicker{
+    color:var(--yellow);font-family:"Raleway",sans-serif;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;font-size:.85rem;margin:0 0 8px;
   }
-  .hero-side strong{color:var(--navy);display:block;font-size:1rem;margin-bottom:4px}
-  .hero-actions{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+  .hero-title{
+    color:#fff;font-size:3rem;font-weight:800;line-height:1.08;margin:0 0 20px;max-width:34rem;
+    text-shadow:0 2px 14px rgba(0,0,0,.35);
+  }
   .btn{
-    display:inline-block;text-decoration:none;border-radius:8px;
-    padding:11px 18px;font-weight:600;font-size:.95rem;border:1px solid transparent;
+    display:inline-block;text-decoration:none;border-radius:4px;cursor:pointer;
+    padding:12px 26px;font-family:"Raleway",sans-serif;font-weight:700;font-size:.95rem;
+    letter-spacing:.04em;text-transform:uppercase;border:2px solid transparent;
   }
-  .btn-main{background:var(--navy);color:#fff}
-  .btn-main:hover{background:var(--navy-2)}
-  .btn-ghost{background:#fff;color:var(--navy);border-color:var(--navy)}
-  .btn-ghost:hover{background:var(--wash)}
+  .btn-red{background:var(--red);color:#fff}
+  .btn-red:hover{background:var(--red-dark)}
+  .hero-dots{
+    position:absolute;left:0;right:0;bottom:22px;z-index:5;
+    display:flex;justify-content:center;gap:9px;
+  }
+  .hero-dots button{
+    width:12px;height:12px;border-radius:50%;border:2px solid #fff;background:transparent;
+    padding:0;cursor:pointer;
+  }
+  .hero-dots button.active{background:var(--yellow);border-color:var(--yellow)}
 
   /* ---------- Secciones ---------- */
-  main{max-width:1180px;margin:0 auto;padding:8px 20px 48px}
-  section.block{padding:30px 0 6px}
-  section.block h2{
-    font-size:1.45rem;color:var(--navy);margin:0 0 6px;font-weight:750;
+  section.block{background:#fff;padding:64px 0}
+  section.block.alt{background:rgba(255,255,255,.82)}
+  .sec-title{
+    font-size:2.1rem;font-weight:800;text-align:center;margin:0 0 10px;
   }
-  section.block .sub{color:var(--muted);margin:0 0 18px;max-width:44rem}
-  .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .level{
-    background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--sky);
-    border-radius:var(--radius);padding:18px;
+  .sec-rule{width:64px;height:4px;background:var(--red);border-radius:2px;margin:0 auto 18px}
+  .sec-sub{text-align:center;color:var(--muted);max-width:44rem;margin:0 auto 36px;font-size:1.02rem}
+
+  .inst-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:40px;align-items:center}
+  .inst-grid h2{text-align:left}
+  .inst-grid .sec-rule{margin:0 0 16px}
+  .inst-grid p{color:var(--muted);margin:0 0 14px}
+  .inst-grid p strong{color:var(--navy)}
+
+  .video-card{
+    position:relative;display:block;border-radius:8px;overflow:hidden;
+    box-shadow:0 12px 30px rgba(29,43,77,.22);text-decoration:none;
   }
-  .level:nth-child(2){border-top-color:var(--gold)}
-  .level:nth-child(3){border-top-color:var(--navy)}
-  .level h3{margin:0 0 6px;font-size:1.08rem;color:var(--navy)}
-  .level p{margin:0;color:var(--muted);font-size:.94rem}
-  .projects{display:grid;grid-template-columns:1fr 1fr;gap:0 34px}
-  .project{
-    display:grid;grid-template-columns:110px 1fr;gap:14px;
-    padding:14px 0;border-bottom:1px solid var(--line);
+  .video-card img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+  .video-card .play{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:rgba(19,30,56,.28);transition:background .2s;
   }
-  .project h3{margin:2px 0 0;font-size:1rem;color:var(--navy)}
-  .project p{margin:0;color:var(--muted);font-size:.94rem}
-  .faq details{
-    background:var(--paper);border:1px solid var(--line);border-radius:8px;
-    padding:12px 16px;margin-bottom:10px;
+  .video-card:hover .play{background:rgba(19,30,56,.45)}
+  .video-card .play span{
+    width:68px;height:68px;border-radius:50%;background:var(--red);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 18px rgba(0,0,0,.35);
   }
-  .faq summary{cursor:pointer;font-weight:600;color:var(--navy)}
-  .faq details p{margin:8px 0 2px;color:var(--muted)}
-  .edit-note{
-    background:#fff8e6;border:1px solid var(--gold);border-radius:8px;
-    padding:12px 16px;color:#6b5510;font-size:.92rem;margin-top:14px;
+  .video-card .play svg{width:28px;height:28px;fill:#fff;margin-left:4px}
+  .video-card figcaption{
+    position:absolute;left:0;right:0;bottom:0;padding:10px 14px;color:#fff;font-size:.88rem;
+    background:linear-gradient(transparent,rgba(19,30,56,.85));
   }
 
-  /* ---------- Chat ---------- */
-  .chat-shell{
-    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
-    display:grid;grid-template-columns:280px 1fr;overflow:hidden;
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .gallery .video-card .play span{width:52px;height:52px}
+  .gallery .video-card .play svg{width:20px;height:20px}
+
+  .alumni{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .alumni-card{
+    background:#fff;border:1px solid var(--line);border-top:4px solid var(--green);
+    border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:10px;
+    box-shadow:0 3px 10px rgba(29,43,77,.06);
   }
-  .chat-side{
-    background:var(--navy);color:#dbe9f3;padding:20px;
+  .alumni-card:nth-child(3n+2){border-top-color:var(--red)}
+  .alumni-card:nth-child(3n){border-top-color:var(--yellow)}
+  .alumni-head{display:flex;gap:14px;align-items:center}
+  .alumni-head img{
+    width:64px;height:64px;border-radius:50%;object-fit:cover;flex:0 0 64px;
+    border:3px solid var(--wash);
   }
-  .chat-side h3{margin:0 0 8px;color:#fff;font-size:1.05rem}
-  .chat-side p{margin:0 0 14px;font-size:.9rem;color:#bcd2e2}
+  .alumni-head h3{font-size:1rem;line-height:1.25}
+  .stars{color:var(--red);font-size:.82rem;letter-spacing:.18em}
+  .alumni-card p{margin:0;color:var(--muted);font-size:.93rem}
+
+  .afil-row{
+    display:flex;justify-content:center;align-items:center;gap:44px;flex-wrap:wrap;
+  }
+  .afil-row img{max-height:92px;width:auto;object-fit:contain}
+
+  /* ---------- Pie ---------- */
+  footer{
+    color:#d7dee9;position:relative;
+    background:var(--navy) url("assets/footer-letras.jpg") center/cover no-repeat;
+  }
+  footer::before{content:"";position:absolute;inset:0;background:rgba(29,43,77,.93)}
+  footer .wrap{position:relative;padding-top:52px;padding-bottom:0}
+  .foot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:34px;padding-bottom:40px}
+  footer h2{
+    color:#fff;font-size:1.12rem;font-weight:700;margin:0 0 16px;
+    padding-bottom:10px;border-bottom:3px solid var(--red);
+  }
+  footer ul{list-style:none;margin:0;padding:0}
+  footer li{margin:0 0 9px}
+  footer a{color:#d7dee9;text-decoration:none;font-size:.94rem}
+  footer a:hover{color:var(--yellow)}
+  footer p{margin:0 0 8px;font-size:.94rem;line-height:1.55}
+  footer p b{color:#fff}
+  .foot-bottom{
+    position:relative;border-top:1px solid rgba(255,255,255,.18);
+    background:rgba(19,30,56,.65);
+  }
+  .foot-bottom .wrap{
+    padding-top:16px;padding-bottom:16px;font-size:.86rem;color:#aeb9cc;
+    display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between;
+  }
+
+  /* ---------- Chat desplegable ---------- */
+  .chat-fab{
+    position:fixed;right:22px;bottom:22px;z-index:1200;
+    width:62px;height:62px;border-radius:50%;border:0;cursor:pointer;
+    background:var(--navy);color:#fff;
+    box-shadow:0 10px 26px rgba(19,30,56,.4);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .15s ease,background .15s ease;
+  }
+  .chat-fab:hover{transform:scale(1.06);background:var(--red)}
+  .chat-fab svg{width:30px;height:30px;fill:#fff}
+  .chat-fab .dot{
+    position:absolute;top:-2px;right:-2px;width:22px;height:22px;border-radius:50%;
+    background:var(--red);color:#fff;font-size:.72rem;font-weight:700;
+    display:flex;align-items:center;justify-content:center;border:2px solid #fff;
+    font-family:"Open Sans",sans-serif;
+  }
+  .chat-fab.opened .dot{display:none}
+  .chat-panel{
+    position:fixed;right:22px;bottom:96px;z-index:1199;
+    width:min(384px,calc(100vw - 32px));
+    height:min(608px,calc(100dvh - 122px));
+    background:#fff;border-radius:16px;overflow:hidden;
+    box-shadow:0 24px 60px rgba(19,30,56,.42);
+    display:flex;flex-direction:column;
+    opacity:0;visibility:hidden;transform:translateY(16px) scale(.98);
+    transform-origin:bottom right;
+    transition:opacity .22s ease,transform .22s ease,visibility .22s;
+  }
+  .chat-panel.open{opacity:1;visibility:visible;transform:none}
+  .chat-head{
+    background:linear-gradient(120deg,var(--navy) 0%,#27406e 100%);color:#fff;
+    padding:14px 16px;display:flex;align-items:center;gap:12px;flex:0 0 auto;
+  }
+  .chat-avatar{
+    width:42px;height:42px;border-radius:50%;flex:0 0 42px;
+    background:var(--yellow);color:var(--navy);
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Raleway",sans-serif;font-weight:800;font-size:.8rem;
+  }
+  .chat-head h3{color:#fff;font-size:1rem;margin:0;line-height:1.2}
+  .chat-head small{display:block;color:#bcd0ea;font-size:.76rem;font-family:"Open Sans",sans-serif}
+  .chat-close{
+    margin-left:auto;background:transparent;border:0;color:#fff;cursor:pointer;
+    width:36px;height:36px;border-radius:50%;font-size:1.3rem;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .chat-close:hover{background:rgba(255,255,255,.16)}
+  .chat-chips{
+    flex:0 0 auto;display:flex;gap:8px;padding:10px 12px;overflow-x:auto;
+    background:#eef3f8;border-bottom:1px solid var(--line);scrollbar-width:thin;
+  }
   .chip{
-    display:block;width:100%;text-align:left;margin:0 0 8px;
-    background:var(--navy-2);color:#eaf4fa;border:1px solid #26506f;
-    border-radius:8px;padding:9px 12px;font-size:.9rem;cursor:pointer;
+    flex:0 0 auto;background:#fff;color:var(--navy);border:1px solid #c3d2e0;
+    border-radius:999px;padding:7px 13px;font-size:.83rem;cursor:pointer;
+    font-family:"Open Sans",sans-serif;white-space:nowrap;
   }
-  .chip:hover{border-color:var(--sky)}
-  .chat-main{display:flex;flex-direction:column;min-height:430px}
+  .chip:hover{border-color:var(--red);color:var(--red)}
   .chat-log{
-    flex:1;padding:18px;overflow-y:auto;max-height:480px;
-    display:flex;flex-direction:column;gap:10px;background:#fbfcfd;
+    flex:1;padding:16px;overflow-y:auto;
+    display:flex;flex-direction:column;gap:10px;background:#f7fafc;
   }
-  .msg{max-width:82%;padding:10px 14px;border-radius:12px;font-size:.95rem;white-space:pre-wrap}
-  .msg.bot{background:#e9f2f8;color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:.93rem;white-space:pre-wrap;line-height:1.5}
+  .msg.bot{background:#e9f0f7;color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px}
   .msg.user{background:var(--navy);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-  .chat-form{
-    display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);background:#fff;
-  }
-  .chat-form input{
-    flex:1;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:.95rem;min-width:0;
-  }
-  .chat-form button{
-    background:var(--gold);color:var(--navy);border:0;border-radius:8px;
-    padding:11px 18px;font-weight:700;cursor:pointer;font-size:.95rem;
-  }
-  .chat-form button:hover{background:#e3a812}
   .lead-bar{
-    display:none;padding:10px 14px;border-top:1px solid var(--line);background:#fff8e6;
-    font-size:.9rem;color:#6b5510;gap:10px;align-items:center;flex-wrap:wrap;
+    display:none;padding:10px 14px;border-top:1px solid var(--line);background:#fff8e1;
+    font-size:.87rem;color:#6b5510;gap:10px;align-items:center;flex-wrap:wrap;flex:0 0 auto;
   }
   .lead-bar.show{display:flex}
   .lead-bar button{
     background:var(--navy);color:#fff;border:0;border-radius:6px;padding:7px 12px;cursor:pointer;font-weight:600;
   }
-
-  footer{
-    background:var(--navy);color:#bcd2e2;margin-top:10px;
+  .chat-form{
+    display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);background:#fff;flex:0 0 auto;
   }
-  footer .wrap{max-width:1180px;margin:0 auto;padding:22px 20px;font-size:.9rem}
-  footer strong{color:#fff}
-
-  @media (max-width:900px){
-    .hero .wrap{grid-template-columns:1fr}
-    .levels{grid-template-columns:1fr}
-    .projects{grid-template-columns:1fr}
-    .chat-shell{grid-template-columns:1fr}
-    .chat-side{order:2}
+  .chat-form input{
+    flex:1;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:.95rem;min-width:0;
+    font-family:"Open Sans",sans-serif;
   }
-  @media (max-width:480px){
-    .hero h1{font-size:1.8rem}
-    .project{grid-template-columns:1fr;gap:4px}
-    .demo-tag{margin-left:0}
-    .msg{max-width:94%}
+  .chat-form button{
+    background:var(--red);color:#fff;border:0;border-radius:8px;
+    padding:11px 16px;font-weight:700;cursor:pointer;font-size:.93rem;
+    font-family:"Open Sans",sans-serif;
+  }
+  .chat-form button:hover{background:var(--red-dark)}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1020px){
+    .gallery{grid-template-columns:repeat(2,1fr)}
+    .alumni{grid-template-columns:repeat(2,1fr)}
+    .foot-grid{grid-template-columns:repeat(2,1fr)}
+    .main-nav a{padding:10px 9px;font-size:.8rem}
+  }
+  @media (max-width:860px){
+    .main-nav{
+      display:none;position:absolute;left:0;right:0;top:100%;
+      background:#fff;box-shadow:0 16px 30px rgba(29,43,77,.2);
+      border-top:3px solid var(--red);padding:10px 16px 16px;
+    }
+    .main-nav.show{display:block}
+    .main-nav ul{flex-direction:column;align-items:stretch}
+    .main-nav a{padding:11px 8px;font-size:.92rem}
+    .main-nav .sub{
+      position:static;display:flex;box-shadow:none;border-top:0;padding:0 0 4px 16px;
+    }
+    .nav-toggle{display:flex}
+    .site-head .wrap{position:relative}
+    .inst-grid{grid-template-columns:1fr}
+    .hero-title{font-size:2.2rem}
+    .hero-inner{padding:84px 0 72px}
+    .topbar .right{margin-left:0}
+  }
+  @media (max-width:600px){
+    .alumni{grid-template-columns:1fr}
+    .gallery{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr}
+    .brand img{height:52px}
+    .hero-title{font-size:1.85rem}
+    section.block{padding:46px 0}
+    .chat-panel{
+      right:12px;left:12px;bottom:92px;width:auto;
+      height:calc(100dvh - 112px);
+    }
+    .chat-fab{right:16px;bottom:16px}
+    .msg{max-width:92%}
   }
 </style>
 </head>
 <body>
 
-<header class="site-head">
-  <div class="wrap">
-    <a class="brand" href="#inicio">
-      <span class="brand-mark">IJEM</span>
-      <span>
-        <strong>Instituto Juventud del Estado de México</strong>
-        <small>Secundaria · Preparatoria · Innovación educativa</small>
-      </span>
-    </a>
-    <nav class="site-nav" aria-label="Principal">
-      <a href="#niveles">Niveles</a>
-      <a href="#innovacion">Innovación</a>
-      <a href="#preguntas">Preguntas frecuentes</a>
-      <a href="#asistente">Asistente</a>
-    </nav>
-    <span class="demo-tag">Sitio de demostración</span>
-  </div>
-</header>
+<div class="demo-strip"><strong>Página de demostración</strong> — clon para prueba del asistente virtual. No es el sitio oficial del Instituto Juventud.</div>
 
-<div class="hero" id="inicio">
+<div class="topbar">
   <div class="wrap">
-    <div>
-      <h1>Una escuela que también construye su propia tecnología</h1>
-      <p class="lede">El Instituto Juventud del Estado de México atiende secundaria y preparatoria, y desde su Departamento de Innovación Educativa crea las plataformas, tutores y videojuegos que usa su propia comunidad.</p>
-      <div class="hero-actions">
-        <a class="btn btn-main" href="#asistente">Preguntar al asistente</a>
-        <a class="btn btn-ghost" href="#innovacion">Ver los proyectos</a>
-      </div>
+    <div class="phones">
+      <span><b>Rincón Echegaray</b> 55 5373 3355 | 55 5377 3581</span>
+      <span><b>Colón de Echegaray</b> 55 5360 2096 | 55 4752 7029</span>
     </div>
-    <div class="hero-side">
-      <strong>Filosofía Josefina</strong>
-      «Hacer siempre y en todo lo mejor.» Educar con propósito, pensar con libertad, sentir con profundidad y actuar con responsabilidad.
+    <div class="right">
+      <a href="mailto:contacto@juventud.edu.mx">contacto@juventud.edu.mx</a>
+      <span class="follow">SÍGUENOS:</span>
     </div>
   </div>
 </div>
 
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="https://juventud.edu.mx/" aria-label="Instituto Juventud — inicio">
+      <img src="assets/logo-ijem.png" alt="Instituto Juventud">
+    </a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </button>
+    <nav class="main-nav" id="mainNav" aria-label="Principal">
+      <ul>
+        <li><a href="https://juventud.edu.mx/">Inicio</a></li>
+        <li><a href="https://juventud.edu.mx/conocenos/">Conócenos</a></li>
+        <li class="has-sub">
+          <a href="#" aria-haspopup="true">Educación</a>
+          <div class="sub">
+            <a href="https://juventud.edu.mx/jardin-de-ninos/">Jardín de Niños</a>
+            <a href="https://juventud.edu.mx/juventud-primaria/">Primaria</a>
+            <a href="https://juventud.edu.mx/secundaria/">Secundaria</a>
+            <a href="https://juventud.edu.mx/preparatoria/">Preparatoria</a>
+          </div>
+        </li>
+        <li><a href="https://juventud.edu.mx/comunidad/">Comunidad</a></li>
+        <li><a href="#">Servicios</a></li>
+        <li><a href="https://ln.globalschool.mx/gs/gslearn/frm_login">Pagos</a></li>
+        <li><a href="https://juventud.edu.mx/contacto/">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="heroSlider" aria-label="Presentación del instituto">
+  <div class="hero-slide active" style="background-image:url('assets/hero-paseo.jpg')">
+    <div class="hero-inner"><div class="wrap">
+      <p class="hero-kicker">Recorridos Virtuales</p>
+      <h2 class="hero-title">Campus Paseo</h2>
+      <a class="btn btn-red" href="https://juventud.edu.mx/conocenos/">Ver más</a>
+    </div></div>
+  </div>
+  <div class="hero-slide" style="background-image:url('assets/hero-sanagustin.jpg')">
+    <div class="hero-inner"><div class="wrap">
+      <p class="hero-kicker">Recorridos Virtuales</p>
+      <h2 class="hero-title">Campus San Agustín</h2>
+      <a class="btn btn-red" href="https://juventud.edu.mx/conocenos/">Ver más</a>
+    </div></div>
+  </div>
+  <div class="hero-slide" style="background-image:url('assets/footer-letras.jpg')">
+    <div class="hero-inner"><div class="wrap">
+      <p class="hero-kicker">Instituto Juventud</p>
+      <h2 class="hero-title">Admisiones</h2>
+      <a class="btn btn-red" href="https://juventud.edu.mx/admisiones/">Ver más</a>
+    </div></div>
+  </div>
+  <div class="hero-dots" role="tablist" aria-label="Diapositivas">
+    <button type="button" class="active" data-slide="0" aria-label="Campus Paseo"></button>
+    <button type="button" data-slide="1" aria-label="Campus San Agustín"></button>
+    <button type="button" data-slide="2" aria-label="Admisiones"></button>
+  </div>
+</div>
+
 <main>
-  <section class="block" id="niveles">
-    <h2>Niveles</h2>
-    <p class="sub">Tres comunidades, una misma casa. La información oficial de costos, fechas y requisitos la confirma cada área; este sitio de prueba no la inventa.</p>
-    <div class="levels">
-      <article class="level">
-        <h3>Secundaria</h3>
-        <p>Formación de adolescentes con acompañamiento cercano y vida escolar activa: torneos de Esports, club de ajedrez y proyectos digitales.</p>
-      </article>
-      <article class="level">
-        <h3>Preparatoria</h3>
-        <p>Grupos de 4º, 5º y 6º. Entre sus asignaturas están Lógica, Ética, Derecho e IECSE, con tutores de inteligencia artificial propios (Ju-bits).</p>
-      </article>
-      <article class="level">
-        <h3>Primaria Josefina</h3>
-        <p>La primaria vinculada al instituto, con su agenda propia y los acompañantes digitales de Ju-bits Kids para aprender en familia.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="block" id="innovacion">
-    <h2>Innovación educativa</h2>
-    <p class="sub">Proyectos creados por el Departamento de Innovación Educativa (DIE) y el Centro de Innovación e Investigación Juventud (CIIJ), dirigidos por el profe Adrian Rivera.</p>
-    <div class="projects">
-      <article class="project">
-        <h3>Ag Lucem</h3>
-        <p>La plataforma interna del instituto: agenda, horario, proyectos, realidad aumentada y Esports, con cuenta personal para cada alumno y docente.</p>
-      </article>
-      <article class="project">
-        <h3>Ju-bits</h3>
-        <p>Tutores con inteligencia artificial para preparatoria que responden breve, una idea a la vez, con la Filosofía Josefina como base.</p>
-      </article>
-      <article class="project">
-        <h3>Ju-bits Kids</h3>
-        <p>Nueve acompañantes digitales por inteligencias múltiples para primaria, con puerta parental y filtros de contenido para menores.</p>
-      </article>
-      <article class="project">
-        <h3>Chema-tron</h3>
-        <p>Minijuegos retro hechos en el instituto —Chema Bird, Tetris, Avión Chema— con tablas de mejores puntuaciones.</p>
-      </article>
-      <article class="project">
-        <h3>Taller de IA</h3>
-        <p>Martes: herramientas de estudio con inteligencia artificial. Jueves: desarrollo de videojuegos con IA.</p>
-      </article>
-      <article class="project">
-        <h3>Esports</h3>
-        <p>Juve-Smash Secundaria en diciembre de 2026, Chema Cart en febrero de 2027 y Fut Juventud en abril de 2027.</p>
-      </article>
-      <article class="project">
-        <h3>Serch Education</h3>
-        <p>Buscador de escuelas cercanas al instituto, para que las familias localicen opciones por distancia, nivel y tipo.</p>
-      </article>
-      <article class="project">
-        <h3>Chemini</h3>
-        <p>Asistente de IA educativa local: libre, privado y gratuito, pensado para el aula sin depender de la nube.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="block faq" id="preguntas">
-    <h2>Preguntas frecuentes</h2>
-    <p class="sub">Las mismas respuestas que da el asistente. Donde veas un marcador, el dato oficial está pendiente de que la institución lo complete.</p>
-    <details>
-      <summary>¿Qué niveles tiene el IJEM?</summary>
-      <p>Secundaria y preparatoria, además de la primaria vinculada (Primaria Josefina).</p>
-    </details>
-    <details>
-      <summary>¿Cuánto cuesta la colegiatura?</summary>
-      <p>[EDITAR: costos oficiales]. Ese dato lo confirma el área administrativa; el asistente puede registrar tus datos para que te contacten.</p>
-    </details>
-    <details>
-      <summary>¿Cuándo son las inscripciones?</summary>
-      <p>[EDITAR: fechas oficiales de inscripción]. En cuanto la institución publique el calendario, el asistente lo tendrá actualizado.</p>
-    </details>
-    <details>
-      <summary>¿Qué actividades extracurriculares hay?</summary>
-      <p>El Taller de IA (martes y jueves), la liga de Esports con torneos como Juve-Smash, el club de ajedrez y los proyectos digitales del DIE.</p>
-    </details>
-    <div class="edit-note">Nota de la prueba: los datos marcados con [EDITAR] —dirección, teléfono, costos, fechas, requisitos y horarios oficiales— los completan las áreas del instituto antes de usar el asistente con el público.</div>
-  </section>
-
-  <section class="block" id="asistente">
-    <h2>Asistente del IJEM</h2>
-    <p class="sub">Prueba del bot conversacional. Responde desde la base de conocimiento del instituto y puede registrar tus datos para que un área te contacte. En esta demostración el registro se guarda solo en tu navegador.</p>
-    <div class="chat-shell">
-      <aside class="chat-side">
-        <h3>¿Por dónde empezamos?</h3>
-        <p>Toca una pregunta o escribe la tuya. El asistente no inventa datos oficiales: si algo está pendiente, te ofrece registrarte.</p>
-        <button class="chip" type="button" data-q="¿Qué niveles tiene el IJEM?">¿Qué niveles tiene el IJEM?</button>
-        <button class="chip" type="button" data-q="¿Cuánto cuesta la colegiatura?">¿Cuánto cuesta la colegiatura?</button>
-        <button class="chip" type="button" data-q="¿Cuándo son las inscripciones?">¿Cuándo son las inscripciones?</button>
-        <button class="chip" type="button" data-q="¿Qué es Ag Lucem?">¿Qué es Ag Lucem?</button>
-        <button class="chip" type="button" data-q="Quiero inscribir a mi hijo">Quiero inscribir a mi hijo/a</button>
-      </aside>
-      <div class="chat-main">
-        <div class="chat-log" id="chatLog" aria-live="polite"></div>
-        <div class="lead-bar" id="leadBar">
-          <span id="leadText">Registro listo.</span>
-          <button type="button" id="leadDownload">Descargar registro (CSV)</button>
+  <section class="block" id="institucion">
+    <div class="wrap">
+      <div class="inst-grid">
+        <div>
+          <h2 class="sec-title">Institución educativa</h2>
+          <div class="sec-rule" style="margin-left:0"></div>
+          <p><strong>Acreditado internacionalmente por su calidad educativa.</strong></p>
+          <p>El Instituto Juventud del Estado de México fiel al principio heredado por el p. José María Vilaseca de “hacer siempre y en todo lo mejor”, desde su origen, hace más de 50 años, ha optado por la calidad como una actitud de mejora permanente, recibiendo en agosto de 2016 de la Confederación Nacional de Escuelas Particulares (CNEP) y avalada por la Oficina Internacional de Educación Católica (OIEC), la acreditación como Escuela de Calidad, misma que se encuentra en proceso de Renovación.</p>
         </div>
-        <form class="chat-form" id="chatForm">
-          <input id="chatInput" type="text" placeholder="Escribe tu pregunta…" autocomplete="off" aria-label="Escribe tu pregunta">
-          <button type="submit">Enviar</button>
-        </form>
+        <figure style="margin:0">
+          <a class="video-card" href="https://www.youtube.com/watch?v=6G0a_S304-I" target="_blank" rel="noopener">
+            <img src="assets/video-institucion.jpg" alt="Video institucional del Instituto Juventud">
+            <span class="play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8v16.4c0 .9 1 1.5 1.8 1L20 13a1.2 1.2 0 0 0 0-2L7.8 2.9C7 2.4 6 2.9 6 3.8z"/></svg></span></span>
+            <figcaption>Conoce el Instituto Juventud</figcaption>
+          </a>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block alt" id="galeria">
+    <div class="wrap">
+      <h2 class="sec-title">Galería de eventos</h2>
+      <div class="sec-rule"></div>
+      <p class="sec-sub">Momentos de la vida escolar de nuestra comunidad, en video.</p>
+      <div class="gallery">
+        <a class="video-card" href="https://www.youtube.com/watch?v=WyTZxJOPg_I" target="_blank" rel="noopener">
+          <img src="assets/galeria-1.jpg" alt="Video de evento del Instituto Juventud">
+          <span class="play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8v16.4c0 .9 1 1.5 1.8 1L20 13a1.2 1.2 0 0 0 0-2L7.8 2.9C7 2.4 6 2.9 6 3.8z"/></svg></span></span>
+        </a>
+        <a class="video-card" href="https://www.youtube.com/watch?v=eYZd3bHaCDM" target="_blank" rel="noopener">
+          <img src="assets/galeria-2.jpg" alt="Video de evento del Instituto Juventud">
+          <span class="play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8v16.4c0 .9 1 1.5 1.8 1L20 13a1.2 1.2 0 0 0 0-2L7.8 2.9C7 2.4 6 2.9 6 3.8z"/></svg></span></span>
+        </a>
+        <a class="video-card" href="https://www.youtube.com/watch?v=302H8kiFZYo" target="_blank" rel="noopener">
+          <img src="assets/galeria-3.jpg" alt="Video de evento del Instituto Juventud">
+          <span class="play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8v16.4c0 .9 1 1.5 1.8 1L20 13a1.2 1.2 0 0 0 0-2L7.8 2.9C7 2.4 6 2.9 6 3.8z"/></svg></span></span>
+        </a>
+        <a class="video-card" href="https://www.youtube.com/watch?v=ea-TyjI39Lo" target="_blank" rel="noopener">
+          <img src="assets/galeria-4.jpg" alt="Video de evento del Instituto Juventud">
+          <span class="play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8v16.4c0 .9 1 1.5 1.8 1L20 13a1.2 1.2 0 0 0 0-2L7.8 2.9C7 2.4 6 2.9 6 3.8z"/></svg></span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="exalumnos">
+    <div class="wrap">
+      <h2 class="sec-title">Mensajes de nuestros ex-alumnos</h2>
+      <div class="sec-rule"></div>
+      <p class="sec-sub">Lo que la comunidad josefina se lleva del Instituto, en palabras de quienes ya egresaron.</p>
+      <div class="alumni">
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-01.jpg" alt="Foto de Patricia Aguilar"><div><h3>Patricia Aguilar</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>Gracias a su excelencia educativa y a sus profesores, el Juventud sembró los valores que rigen mi vida, por eso no dudo hoy en confiarle la educación de mis hijos.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-02.jpg" alt="Foto de Daniela Santana Mejía"><div><h3>Daniela Santana Mejía</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>Pertenecer a la comunidad josefina me ha permitido desarrollarme profesional y personalmente. Veo ahora la oportunidad de retribuir al Instituto todo lo que aprendí.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-03.jpg" alt="Foto de Laura Romero"><div><h3>Laura Romero</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>El Juventud representa en mi vida tres factores en especial: aprendizajes, valores y Comunidad, ya que forjó los cimientos de mi persona y mi profesión.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-04.jpg" alt="Foto de María Teresa Romero"><div><h3>María Teresa Romero</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>Un Instituto que me formó en valores, principios y amor a mi comunidad, un Instituto que me impulsa a dar lo mejor de mí.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-05.jpg" alt="Foto de Pablo Emilio Galaz Alvarez"><div><h3>Pablo Emilio Galaz Alvarez</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>Mi paso por el Instituto Juventud significó vivir experiencias que me dejan muy buenos recuerdos y conocer seres humanos que contribuyeron en mi formación profesional, espiritual y personal.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-06.jpg" alt="Foto de Sandra Gabriela Mendoza García"><div><h3>Sandra Gabriela Mendoza García</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>“Alegría y entusiasmo es lo que se vive el en Juventud”</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-07.jpg" alt="Foto de Carlos Mendoza"><div><h3>Carlos Mendoza</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>En el juventud aprendí valores y disciplina en un ambiente muy agradable.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-08.jpg" alt="Foto de Marco Antonio Vanegas López"><div><h3>Marco Antonio Vanegas López</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>Todo mi reconocimiento y agradecimiento al personal académico y administrativo del Instituto Juventud, quienes con su dedicación y esfuerzo me mostraron el camino a seguir: “hacer siempre y en todo lo mejor”</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-09.jpg" alt="Foto de Sofía Desiree García Castro"><div><h3>Sofía Desiree García Castro</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>Gracias IJEM por darme la capacidad y conocimiento crítico necesario para convertirme en una ciudadana de bien, capaz de adaptarme al cambio y contribuir a la sociedad.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-10.jpg" alt="Foto de Saúl Daniel Jiménez"><div><h3>Saúl Daniel Jiménez</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>“Gracias al Instituto Juventud, pude conocer a grandes personas, tanto profesores como amigos, que hoy en día considero pilares fundamentales en mi educación y desarrollo como persona”.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-11.jpg" alt="Foto de Sofía Velasco González"><div><h3>Sofía Velasco González</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>Mi experiencia en el Instituto Juventud: El Juventud para mí, fue muy importante pues los valores que nos inculcaron los aplico en mi vida diaria y me dejo experiencias inolvidables.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-12.jpg" alt="Foto de Leonardo Damián Oceguera"><div><h3>Leonardo Damián Oceguera</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>“El Juventud me dejó buenas experiencias, valores, enseñanzas y amistades, personalmente valoro mucho que siempre buscan que des la mejor versión de tí mismo”</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-13.jpg" alt="Foto de Carlos Antonio Aburto Martínez"><div><h3>Carlos Antonio Aburto Martínez</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>Sin duda algo para recordar con cariño durante toda mi vida, no sólo por los momentos, sino por las personas que conocí en el camino.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-14.jpg" alt="Foto de Ricardo Hornedo Aldeco"><div><h3>Ricardo Hornedo Aldeco</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>El IJEM me enseñó a lograr a partir de esfuerzo, a valorar lo más importante, a predicar con el ejemplo y a hacer siempre y en todo lo mejor. Gracias.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-15.jpg" alt="Foto de Daniela Hornedo Aldeco"><div><h3>Daniela Hornedo Aldeco</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>Para mi el IJEM fue sin duda la formación más importante en mi vida, me forjó en los valores de respeto, responsabilidad, amor y más, mismos que ahora me representan como profesional.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-16.jpg" alt="Foto de Diego Hornedo Aldeco"><div><h3>Diego Hornedo Aldeco</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>Diversión, amistad y aprendidizaje, son las palabras con las que yo describiría al Juventud.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-17.jpg" alt="Foto de Guillermo Ortega Reséndiz"><div><h3>Guillermo Ortega Reséndiz</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>Para mi el IJEM es la institución que me ayudo a reforzar mi carácter y el lugar en donde hice excelentes amistades de confianza.</p>
+        </article>
+        <article class="alumni-card">
+          <div class="alumni-head"><img src="assets/exalumno-18.jpg" alt="Foto de Yael Zamudio Manjarrez"><div><h3>Yael Zamudio Manjarrez</h3><span class="stars" aria-hidden="true">★★★★★</span></div></div>
+          <p>El Juventud me enseñó a ser una persona leal, deportiva, competitiva y a no rendirme nunca pese a las dificultades y eso jamás lo olvidaré.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block alt" id="afiliaciones">
+    <div class="wrap">
+      <h2 class="sec-title">Nuestras afiliaciones</h2>
+      <div class="sec-rule"></div>
+      <div class="afil-row">
+        <img src="assets/afiliado-1.jpg" alt="Afiliación del Instituto Juventud">
+        <img src="assets/afiliado-2.jpg" alt="Afiliación del Instituto Juventud">
+        <img src="assets/logo-cnep.png" alt="Logo CNEP">
       </div>
     </div>
   </section>
@@ -333,9 +563,79 @@
 
 <footer>
   <div class="wrap">
-    <strong>IJEM prueba</strong> — Sitio de demostración del Departamento de Innovación Educativa (DIE) del Instituto Juventud del Estado de México. No es el sitio oficial del instituto.
+    <div class="foot-grid">
+      <div>
+        <h2>Mapa del Sitio</h2>
+        <ul>
+          <li><a href="https://juventud.edu.mx/conocenos/">Conócenos</a></li>
+          <li><a href="https://juventud.edu.mx/comunidad/">Comunidad</a></li>
+          <li><a href="https://ln.globalschool.mx/gs/gslearn/frm_login">Pagos</a></li>
+          <li><a href="https://juventud.edu.mx/contacto/">Contacto</a></li>
+          <li><a href="https://juventud.edu.mx/admisiones/">Admisiones</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="https://juventud.edu.mx/aviso-de-privacidad/">Aviso de privacidad</a></li>
+          <li><a href="https://juventud.edu.mx/bolsa-de-trabajo/">Bolsa de trabajo</a></li>
+          <li><span>Protocolo Sanitario</span></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Rincón Echegaray</h2>
+        <p>Calzada San Agustín 61<br>Rincón Echegaray<br>Naucalpan de Juárez<br>Estado de México C.P. 53309</p>
+        <p>Tel. (55) 5373 3355<br>(55) 5377 3581<br>(55) 5363 1064</p>
+        <p><a href="https://juventud.edu.mx/contacto/">Ver ubicación</a></p>
+      </div>
+      <div>
+        <h2>Colón de Echegaray</h2>
+        <p>Av. del Paseo 19<br>Colón de Echegaray<br>Naucalpan de Juárez<br>Estado de México C.P. 53300</p>
+        <p>Tel. (55) 5360 2096<br>(55) 4752 7029</p>
+        <p><a href="https://juventud.edu.mx/contacto/">Ver ubicación</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="wrap">
+      <span>Todos los derechos reservados Instituto Juventud 2026 | Diseñado por Tool Studio</span>
+      <span>Página de demostración — clon para prueba del asistente virtual</span>
+    </div>
   </div>
 </footer>
+
+<!-- ---------- Asistente desplegable ---------- -->
+<button class="chat-fab" id="chatFab" type="button" aria-label="Abrir el asistente virtual" aria-expanded="false" aria-controls="chatPanel">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.02 2 11c0 2.9 1.55 5.48 3.96 7.13-.16 1.1-.62 2.42-1.4 3.37 0 0 2.9.2 4.9-1.17.8.2 1.65.3 2.54.3 5.52 0 10-4.02 10-9S17.52 2 12 2zm-3.2 10.6c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3.2 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3.2 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+  <span class="dot" aria-hidden="true">1</span>
+</button>
+
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Asistente virtual del IJEM" aria-hidden="true">
+  <div class="chat-head">
+    <span class="chat-avatar" aria-hidden="true">IJEM</span>
+    <div>
+      <h3>Asistente del IJEM</h3>
+      <small>En línea · Responde desde la base oficial del instituto</small>
+    </div>
+    <button class="chat-close" id="chatClose" type="button" aria-label="Cerrar el asistente">×</button>
+  </div>
+  <div class="chat-chips" aria-label="Preguntas frecuentes">
+    <button class="chip" type="button" data-q="¿Qué niveles tiene el IJEM?">¿Qué niveles tiene el IJEM?</button>
+    <button class="chip" type="button" data-q="¿Cuánto cuesta la colegiatura?">¿Cuánto cuesta la colegiatura?</button>
+    <button class="chip" type="button" data-q="¿Cuándo son las inscripciones?">¿Cuándo son las inscripciones?</button>
+    <button class="chip" type="button" data-q="¿Qué es Ag Lucem?">¿Qué es Ag Lucem?</button>
+    <button class="chip" type="button" data-q="Quiero inscribir a mi hijo">Quiero inscribir a mi hijo/a</button>
+  </div>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <div class="lead-bar" id="leadBar">
+    <span id="leadText">Registro listo.</span>
+    <button type="button" id="leadDownload">Descargar registro (CSV)</button>
+  </div>
+  <form class="chat-form" id="chatForm">
+    <input id="chatInput" type="text" placeholder="Escribe tu pregunta…" autocomplete="off" aria-label="Escribe tu pregunta">
+    <button type="submit">Enviar</button>
+  </form>
+</div>
 
 <script>
 (function(){
@@ -515,6 +815,71 @@
   });
 
   addMsg("Hola, soy el asistente virtual del Instituto Juventud del Estado de México. ¿En qué te ayudo? Puedo darte información sobre secundaria, preparatoria, inscripciones y nuestros proyectos de innovación.", "bot");
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ===== Panel desplegable del asistente ===== */
+  var fab = document.getElementById("chatFab");
+  var panel = document.getElementById("chatPanel");
+  var closeBtn = document.getElementById("chatClose");
+  var chatInput = document.getElementById("chatInput");
+  var isOpen = false;
+
+  function setOpen(open){
+    isOpen = open;
+    panel.classList.toggle("open", open);
+    panel.setAttribute("aria-hidden", open ? "false" : "true");
+    fab.setAttribute("aria-expanded", open ? "true" : "false");
+    fab.setAttribute("aria-label", open ? "Cerrar el asistente virtual" : "Abrir el asistente virtual");
+    if (open){
+      fab.classList.add("opened");
+      if (window.innerWidth > 600){ window.setTimeout(function(){ chatInput.focus(); }, 260); }
+    }
+  }
+  fab.addEventListener("click", function(){ setOpen(!isOpen); });
+  closeBtn.addEventListener("click", function(){ setOpen(false); fab.focus(); });
+  document.addEventListener("keydown", function(ev){
+    if (ev.key === "Escape" && isOpen){ setOpen(false); }
+  });
+
+  /* ===== Menú móvil ===== */
+  var navToggle = document.getElementById("navToggle");
+  var mainNav = document.getElementById("mainNav");
+  navToggle.addEventListener("click", function(){
+    var shown = mainNav.classList.toggle("show");
+    navToggle.setAttribute("aria-expanded", shown ? "true" : "false");
+  });
+
+  /* ===== Slider del héroe ===== */
+  var slides = document.querySelectorAll(".hero-slide");
+  var dots = document.querySelectorAll(".hero-dots button");
+  var current = 0, timer = null;
+  function goTo(n){
+    slides[current].classList.remove("active");
+    dots[current].classList.remove("active");
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add("active");
+    dots[current].classList.add("active");
+  }
+  function startAuto(){
+    stopAuto();
+    timer = window.setInterval(function(){ goTo(current + 1); }, 6000);
+  }
+  function stopAuto(){ if (timer){ window.clearInterval(timer); timer = null; } }
+  for (var d = 0; d < dots.length; d++){
+    dots[d].addEventListener("click", function(){
+      goTo(parseInt(this.getAttribute("data-slide"), 10));
+      startAuto();
+    });
+  }
+  var hero = document.getElementById("heroSlider");
+  hero.addEventListener("mouseenter", stopAuto);
+  hero.addEventListener("mouseleave", startAuto);
+  startAuto();
 })();
 </script>
 </body>
