@@ -61,6 +61,33 @@
   .herramienta p{margin:0 0 12px;font-size:13.5px;color:var(--muted);line-height:1.5}
   iframe.hoja{width:100%;height:480px;border:1px solid var(--line);border-radius:12px;background:#fff}
   footer{color:var(--muted);text-align:center;padding:22px 16px 30px;font-size:13px}
+
+  .slicers{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+  .slicers .grupo{display:flex;gap:6px;flex-wrap:wrap}
+  .slicers span.etq{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-right:2px}
+  .pill{border:1px solid #d2d2d7;background:#fff;color:var(--ink);border-radius:980px;padding:7px 14px;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .13s}
+  .pill:hover{border-color:var(--navy)}
+  .pill.activa{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .slicers select{padding:8px 10px;border:1px solid #d2d2d7;border-radius:10px;font-size:13.5px;background:#fbfbfd}
+  .graficas{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+  .grafica{border:1px solid var(--line);border-radius:14px;padding:18px;background:#fbfbfd}
+  .grafica h3{margin:0 0 2px;color:var(--navy);font-size:15.5px;font-weight:600}
+  .grafica p.sub{margin:0 0 12px;font-size:12.5px;color:var(--muted)}
+  .leyenda{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:10px}
+  .leyenda i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+  .barras{display:flex;flex-direction:column;gap:9px}
+  .barra-fila{display:grid;grid-template-columns:132px 1fr 34px;gap:10px;align-items:center;font-size:13px}
+  .barra-fila .nombre{color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .barra-fila .valor{text-align:right;font-weight:600;color:var(--navy)}
+  .barra-pista{background:#ececf0;border-radius:6px;height:14px;overflow:hidden}
+  .barra-relleno{height:100%;border-radius:6px;transition:width .4s}
+  .columnas{display:flex;align-items:flex-end;gap:4px;height:130px;border-bottom:1px solid var(--line);padding-top:6px}
+  .columna{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+  .columna .col{width:70%;max-width:26px;background:var(--navy);border-radius:5px 5px 0 0;min-height:2px;transition:height .4s}
+  .columna .dia{font-size:10.5px;color:var(--muted);white-space:nowrap}
+  .columna .num{font-size:11px;font-weight:600;color:var(--navy)}
+  .hallazgos{margin:0;padding-left:18px;font-size:14px;line-height:1.65}
+  .hallazgos li{margin-bottom:4px}
   .oculto{display:none}
   @media (max-width:560px){
     main{padding:20px 14px 40px}
@@ -122,6 +149,55 @@
       <div class="stat fb"><div class="barra"></div><b id="st-fb">0</b><span>Por Facebook</span></div>
       <div class="stat web"><div class="barra"></div><b id="st-web">0</b><span>Por la página web</span></div>
       <div class="stat can"><div class="barra"></div><b id="st-can">0</b><span>Casos canalizados</span></div>
+    </div>
+
+
+    <h2 class="seccion">Análisis de resultados</h2>
+    <div class="slicers noprint">
+      <span class="etq">Canal</span>
+      <div class="grupo" id="f-canal">
+        <button type="button" class="pill activa" data-canal="">Todos</button>
+        <button type="button" class="pill" data-canal="whatsapp">WhatsApp</button>
+        <button type="button" class="pill" data-canal="facebook">Facebook</button>
+        <button type="button" class="pill" data-canal="web">Web</button>
+      </div>
+      <span class="etq">Nivel</span>
+      <select id="f-nivel"><option value="">Todos los niveles</option></select>
+      <span class="etq">Periodo</span>
+      <select id="f-dias">
+        <option value="7">Últimos 7 días</option>
+        <option value="14" selected>Últimos 14 días</option>
+        <option value="30">Últimos 30 días</option>
+        <option value="0">Todo</option>
+      </select>
+    </div>
+    <div class="graficas">
+      <div class="grafica">
+        <h3>Interesados por canal</h3>
+        <p class="sub">De dónde llegan los registros</p>
+        <div id="g-canal"></div>
+        <div class="leyenda" id="g-canal-leyenda"></div>
+      </div>
+      <div class="grafica">
+        <h3>Interesados por nivel</h3>
+        <p class="sub">El nivel que más se pide</p>
+        <div class="barras" id="g-nivel"></div>
+      </div>
+      <div class="grafica">
+        <h3>Actividad por día</h3>
+        <p class="sub">Mensajes recibidos por el asistente</p>
+        <div class="columnas" id="g-dias"></div>
+      </div>
+      <div class="grafica">
+        <h3>Embudo de atención</h3>
+        <p class="sub">De la conversación al registro</p>
+        <div class="barras" id="g-embudo"></div>
+      </div>
+      <div class="grafica" style="grid-column:1/-1">
+        <h3>Hallazgos</h3>
+        <p class="sub">Lo que dicen los datos, en palabras</p>
+        <ul class="hallazgos" id="g-hallazgos"></ul>
+      </div>
     </div>
 
     <h2 class="seccion">Interesados registrados</h2>
@@ -277,6 +353,8 @@
     }
     tablero.classList.remove('oculto');
     btnPdf.classList.remove('oculto');
+    poblarNiveles();
+    analizar();
   }
 
   function cargar(){
@@ -296,6 +374,143 @@
         estadoEl.className = 'estado error';
       });
   }
+
+
+  /* ---------------- Análisis estilo Power BI ---------------- */
+  var COLORES = { whatsapp: '#009945', facebook: '#1877f2', web: '#d9a400' };
+  var fCanal = '', fNivel = '', fDias = 14;
+
+  function poblarNiveles(){
+    var sel = document.getElementById('f-nivel');
+    var actual = sel.value;
+    var niveles = {};
+    (datos || []).forEach(function(m){ if(m.tipo === 'registro' && m.nivel) niveles[m.nivel] = true; });
+    sel.innerHTML = '<option value="">Todos los niveles</option>' + Object.keys(niveles).sort().map(function(n){
+      return '<option value="' + esc(n) + '">' + esc(n) + '</option>';
+    }).join('');
+    sel.value = actual || '';
+    fNivel = sel.value;
+  }
+
+  function enPeriodo(m){
+    if(!fDias) return true;
+    var t = m.timestamp || Date.parse(m.fecha || '');
+    if(!t) return true;
+    return t >= Date.now() - fDias * 24 * 60 * 60 * 1000;
+  }
+  function pasaFiltros(m, conCanal, conNivel){
+    if(conCanal && fCanal && m.canal !== fCanal) return false;
+    if(conNivel && fNivel && (m.nivel || '') !== fNivel) return false;
+    return enPeriodo(m);
+  }
+
+  function dona(segs, total){
+    var r = 54, c = 2 * Math.PI * r, acc = 0, partes = '';
+    segs.forEach(function(s){
+      if(!s.valor || !total) return;
+      var frac = s.valor / total;
+      partes += '<circle cx="70" cy="70" r="' + r + '" fill="none" stroke="' + s.color + '" stroke-width="22" stroke-dasharray="' + (frac * c).toFixed(1) + ' ' + c.toFixed(1) + '" stroke-dashoffset="' + (-acc * c).toFixed(1) + '" transform="rotate(-90 70 70)"/>';
+      acc += frac;
+    });
+    if(!total) partes = '<circle cx="70" cy="70" r="' + r + '" fill="none" stroke="#ececf0" stroke-width="22"/>';
+    return '<svg viewBox="0 0 140 140" width="150" height="150" role="img" aria-label="Interesados por canal">' + partes +
+      '<text x="70" y="66" text-anchor="middle" font-size="26" font-weight="600" fill="#1d2b4d">' + total + '</text>' +
+      '<text x="70" y="86" text-anchor="middle" font-size="10.5" fill="#6e6e73">interesados</text></svg>';
+  }
+
+  function barrasHtml(filas, colorFn){
+    if(!filas.length) return '<p class="desc">Sin datos en este corte.</p>';
+    var max = Math.max.apply(null, filas.map(function(f){ return f.valor; }).concat([1]));
+    return filas.map(function(f){
+      var pct = Math.round(f.valor / max * 100);
+      return '<div class="barra-fila"><span class="nombre">' + esc(f.nombre) + '</span>' +
+        '<div class="barra-pista"><div class="barra-relleno" style="width:' + pct + '%;background:' + colorFn(f) + '"></div></div>' +
+        '<span class="valor">' + f.valor + '</span></div>';
+    }).join('');
+  }
+
+  function analizar(){
+    if(!datos) return;
+    var base = datos.filter(function(m){ return !m.dueno; });
+    var regs = base.filter(function(m){ return m.tipo === 'registro' && pasaFiltros(m, true, true); });
+
+    /* Donut por canal (respeta nivel y periodo) */
+    var porCanal = { whatsapp: 0, facebook: 0, web: 0 };
+    base.filter(function(m){ return m.tipo === 'registro' && pasaFiltros(m, false, true); })
+        .forEach(function(m){ if(porCanal[m.canal] != null) porCanal[m.canal]++; });
+    var totalCanal = porCanal.whatsapp + porCanal.facebook + porCanal.web;
+    document.getElementById('g-canal').innerHTML = dona([
+      { valor: porCanal.whatsapp, color: COLORES.whatsapp },
+      { valor: porCanal.facebook, color: COLORES.facebook },
+      { valor: porCanal.web, color: COLORES.web }
+    ], totalCanal);
+    document.getElementById('g-canal-leyenda').innerHTML =
+      '<span><i style="background:' + COLORES.whatsapp + '"></i>WhatsApp · ' + porCanal.whatsapp + '</span>' +
+      '<span><i style="background:' + COLORES.facebook + '"></i>Facebook · ' + porCanal.facebook + '</span>' +
+      '<span><i style="background:' + COLORES.web + '"></i>Web · ' + porCanal.web + '</span>';
+
+    /* Barras por nivel (respeta canal y periodo) */
+    var porNivel = {};
+    base.filter(function(m){ return m.tipo === 'registro' && pasaFiltros(m, true, false); })
+        .forEach(function(m){ var n = m.nivel || 'Sin especificar'; porNivel[n] = (porNivel[n] || 0) + 1; });
+    var filasNivel = Object.keys(porNivel).map(function(n){ return { nombre: n, valor: porNivel[n] }; })
+      .sort(function(a, b){ return b.valor - a.valor; });
+    document.getElementById('g-nivel').innerHTML = barrasHtml(filasNivel, function(){ return '#1d2b4d'; });
+
+    /* Actividad por día (respeta canal) */
+    var dias = fDias || 30;
+    var conteo = {}, orden = [];
+    for(var i = dias - 1; i >= 0; i--){
+      var d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() - i);
+      var clave = d.toISOString().slice(0, 10);
+      conteo[clave] = 0; orden.push({ clave: clave, etiqueta: d.getDate() + '/' + (d.getMonth() + 1) });
+    }
+    base.filter(function(m){ return pasaFiltros(m, true, false); }).forEach(function(m){
+      var f = (m.fecha || '').slice(0, 10);
+      if(conteo[f] != null) conteo[f]++;
+    });
+    var maxDia = Math.max.apply(null, orden.map(function(o){ return conteo[o.clave]; }).concat([1]));
+    document.getElementById('g-dias').innerHTML = orden.map(function(o, idx){
+      var v = conteo[o.clave];
+      var alto = Math.max(4, Math.round(v / maxDia * 96));
+      var etiqueta = (orden.length <= 14 || idx % 3 === 0) ? o.etiqueta : '';
+      return '<div class="columna"><span class="num">' + (v || '') + '</span><div class="col" style="height:' + alto + 'px"></div><span class="dia">' + etiqueta + '</span></div>';
+    }).join('');
+
+    /* Embudo */
+    var mensajes = base.filter(function(m){ return m.tipo === 'text' && pasaFiltros(m, true, false); }).length;
+    var canalizaciones = base.filter(function(m){ return m.tipo === 'canalizacion' && pasaFiltros(m, true, false); }).length;
+    document.getElementById('g-embudo').innerHTML = barrasHtml([
+      { nombre: 'Mensajes recibidos', valor: mensajes },
+      { nombre: 'Interesados registrados', valor: regs.length },
+      { nombre: 'Casos canalizados', valor: canalizaciones }
+    ], function(f){ return f.nombre === 'Casos canalizados' ? '#e2231a' : (f.nombre === 'Interesados registrados' ? '#009945' : '#1d2b4d'); });
+
+    /* Hallazgos */
+    var hallazgos = [];
+    if(totalCanal){
+      var dom = Object.keys(porCanal).sort(function(a, b){ return porCanal[b] - porCanal[a]; })[0];
+      hallazgos.push('El canal que más interesados trae es <b>' + canalBonito(dom) + '</b>, con el ' + Math.round(porCanal[dom] / totalCanal * 100) + '% de los registros.');
+    }
+    if(filasNivel.length) hallazgos.push('El nivel más pedido es <b>' + esc(filasNivel[0].nombre) + '</b> (' + filasNivel[0].valor + ' de ' + regs.length + ' registros en el corte).');
+    var mejor = orden.slice().sort(function(a, b){ return conteo[b.clave] - conteo[a.clave]; })[0];
+    if(mejor && conteo[mejor.clave]) hallazgos.push('El día con más actividad fue el <b>' + mejor.etiqueta + '</b>, con ' + conteo[mejor.clave] + ' mensajes.');
+    if(mensajes) hallazgos.push('De cada 100 mensajes, <b>' + Math.round(regs.length / mensajes * 100) + '</b> terminan en un interesado registrado.');
+    if(canalizaciones) hallazgos.push('Se canalizaron <b>' + canalizaciones + '</b> casos a atención personal: el asistente deriva lo que no debe responder solo.');
+    if(!hallazgos.length) hallazgos.push('Aún no hay datos suficientes en este corte para sacar conclusiones.');
+    document.getElementById('g-hallazgos').innerHTML = hallazgos.map(function(x){ return '<li>' + x + '</li>'; }).join('');
+  }
+
+  document.getElementById('f-canal').addEventListener('click', function(ev){
+    var b = ev.target.closest('button[data-canal]');
+    if(!b) return;
+    this.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('activa'); });
+    b.classList.add('activa');
+    fCanal = b.getAttribute('data-canal') || '';
+    analizar();
+  });
+  document.getElementById('f-nivel').addEventListener('change', function(){ fNivel = this.value; analizar(); });
+  document.getElementById('f-dias').addEventListener('change', function(){ fDias = parseInt(this.value, 10) || 0; analizar(); });
 
   document.getElementById('btn-cargar').addEventListener('click', cargar);
   claveEl.addEventListener('keydown', function(ev){ if(ev.key === 'Enter') cargar(); });
