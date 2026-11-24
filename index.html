@@ -745,7 +745,7 @@
       lead.mensaje = text;
       lastLead = {
         fecha: new Date().toLocaleString("es-MX"),
-        canal: "Chat web (demo)",
+        canal: "Chat web",
         nombre: lead.nombre, contacto: lead.contacto,
         nivel: lead.nivel, mensaje: lead.mensaje, estado: "Nuevo"
       };
@@ -755,8 +755,15 @@
         window.localStorage.setItem("ijem_registros", JSON.stringify(prev));
       } catch(e){ /* almacenamiento no disponible: el registro sigue visible en pantalla */ }
       leadStep = 0; lead = null;
-      leadText.textContent = "Registro listo: " + lastLead.nombre + " · " + lastLead.nivel + ". En la operación real se guarda en la hoja «Registro de datos recabados» de Drive.";
+      leadText.textContent = "Registro listo: " + lastLead.nombre + " · " + lastLead.nivel + ". Guardando en la hoja «Registro de datos recabados» de Drive…";
       leadBar.classList.add("show");
+      fetch("https://ak.aracknia.com/registro", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre: lastLead.nombre, contacto: lastLead.contacto, nivel: lastLead.nivel, mensaje: lastLead.mensaje })
+      }).then(function(r){ if (!r.ok){ throw new Error("http " + r.status); } return r.json(); })
+        .then(function(){ leadText.textContent = "Registro listo: " + lastLead.nombre + " · " + lastLead.nivel + ". Ya quedó guardado; se refleja en la hoja «Registro de datos recabados» de Drive en minutos."; })
+        .catch(function(){ leadText.textContent = "Registro listo: " + lastLead.nombre + " · " + lastLead.nivel + ". No se pudo guardar en el servidor; descárgalo con el botón (CSV)."; });
       botSay("Listo, " + lastLead.nombre + ". Registré tus datos (" + lastLead.nivel + ") y tu mensaje. El área correspondiente te contactará con la información oficial. ¿Algo más en lo que te ayude?");
       return;
     }
