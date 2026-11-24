@@ -399,7 +399,7 @@
         render();
       })
       .catch(function(e){
-        estadoEl.textContent = 'No se pudo cargar (revisa la clave y que el sistema tenga la versión más reciente).';
+        estadoEl.textContent = 'No se pudo cargar. Revisa que la clave esté bien escrita e inténtalo de nuevo.';
         estadoEl.className = 'estado error';
       });
   }
