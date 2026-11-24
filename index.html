@@ -779,13 +779,49 @@
     botSay(FALLBACK);
   }
 
+  /* ===== Cerebro unificado (v17): el chat web habla con el mismo
+     servidor que WhatsApp y Facebook (saludo, registro, 50 frecuentes,
+     Groq con el cerebro del instituto y canalización). Si el servidor
+     no responde, se usa el respaldo local de arriba (answer). ===== */
+  var sesionChat = null;
+  try {
+    sesionChat = window.localStorage.getItem("ijem_chat_sesion");
+    if (!sesionChat){
+      sesionChat = "w" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+      window.localStorage.setItem("ijem_chat_sesion", sesionChat);
+    }
+  } catch(e){ sesionChat = "w" + Date.now().toString(36); }
+  var enviandoChat = false;
+  function enviarAlBot(text){
+    if (enviandoChat){ return; }
+    enviandoChat = true;
+    fetch("https://ak.aracknia.com/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sesion: sesionChat, texto: text })
+    }).then(function(r){
+      if (!r.ok){ throw new Error("http " + r.status); }
+      return r.json();
+    }).then(function(d){
+      enviandoChat = false;
+      var rs = (d && d.respuestas) || [];
+      if (!rs.length){ answer(text); return; }
+      rs.forEach(function(r2, i){
+        window.setTimeout(function(){ addMsg(r2, "bot"); }, 220 * (i + 1));
+      });
+    }).catch(function(){
+      enviandoChat = false;
+      answer(text);
+    });
+  }
+
   form.addEventListener("submit", function(ev){
     ev.preventDefault();
     var text = input.value.trim();
     if (!text){ return; }
     addMsg(text, "user");
     input.value = "";
-    answer(text);
+    enviarAlBot(text);
   });
 
   var chips = document.querySelectorAll(".chip");
@@ -793,7 +829,7 @@
     chips[c].addEventListener("click", function(){
       var q = this.getAttribute("data-q");
       addMsg(q, "user");
-      answer(q);
+      enviarAlBot(q);
     });
   }
 
@@ -812,7 +848,7 @@
     URL.revokeObjectURL(a.href);
   });
 
-  addMsg("Hola, soy el asistente virtual del Instituto Juventud del Estado de México. ¿En qué te ayudo? Puedo darte información sobre secundaria, preparatoria, inscripciones y nuestros proyectos de innovación.", "bot");
+  addMsg("Escríbeme tu pregunta o toca una de las opciones de arriba: te respondo con la información del instituto y, si quieres, tomo tus datos para que te contacten.", "bot");
 })();
 </script>
 
