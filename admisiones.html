@@ -7,56 +7,71 @@
 <style>
   :root{
     --navy:#1d2b4d; --navy-dark:#131e38; --red:#e2231a; --green:#009945;
-    --yellow:#ffd100; --ink:#333333; --muted:#666666; --paper:#ffffff;
-    --wash:#f7f7f7; --line:#e2e2e2;
+    --yellow:#ffd100; --ink:#1d1d1f; --muted:#6e6e73; --paper:#ffffff;
+    --wash:#f5f5f7; --line:#e8e8ec; --fb:#1877f2;
+    --sombra:0 4px 24px rgba(19,30,56,.06), 0 1px 3px rgba(19,30,56,.05);
+    --radio:18px;
   }
   *{box-sizing:border-box}
-  body{margin:0;font-family:'Segoe UI',Arial,Helvetica,sans-serif;color:var(--ink);background:var(--wash)}
-  header{background:var(--navy);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-  header img{height:56px;width:auto}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--wash);-webkit-font-smoothing:antialiased}
+  header{position:sticky;top:0;z-index:10;background:rgba(29,43,77,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;padding:12px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  header img{height:52px;width:auto}
   header .tit{flex:1;min-width:220px}
-  header h1{margin:0;font-size:24px;letter-spacing:.3px}
-  header p{margin:2px 0 0;color:#d7dee9;font-size:14px}
-  .franja{background:var(--yellow);color:#131e38;text-align:center;font-size:13px;padding:6px 10px;font-weight:600}
-  main{max-width:1080px;margin:0 auto;padding:20px 16px 40px}
-  .tarjeta{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px;box-shadow:0 1px 3px rgba(19,30,56,.06)}
-  .tarjeta h2{margin:0 0 6px;color:var(--navy);font-size:19px}
-  .tarjeta p.desc{margin:0 0 12px;color:var(--muted);font-size:14px}
+  header h1{margin:0;font-size:22px;font-weight:600;letter-spacing:-.2px}
+  header p{margin:2px 0 0;color:#c9d4e8;font-size:13.5px}
+  .franja{background:var(--yellow);color:#131e38;text-align:center;font-size:12.5px;padding:6px 12px;font-weight:600;letter-spacing:.2px}
+  main{max-width:1060px;margin:0 auto;padding:28px 20px 48px}
+  .tarjeta{background:var(--paper);border:1px solid rgba(19,30,56,.05);border-radius:var(--radio);padding:26px;margin-bottom:22px;box-shadow:var(--sombra)}
+  .tarjeta h2{margin:0 0 6px;color:var(--navy);font-size:21px;font-weight:600;letter-spacing:-.3px}
+  .tarjeta h2.seccion{margin-top:26px}
+  .tarjeta p.desc{margin:0 0 14px;color:var(--muted);font-size:14.5px;line-height:1.5}
   .fila{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  input[type=password]{flex:1;min-width:220px;padding:11px 12px;border:1px solid #c9d2e0;border-radius:8px;font-size:15px}
-  button,.boton{display:inline-block;border:none;cursor:pointer;text-decoration:none;font-size:15px;font-weight:600;border-radius:8px;padding:11px 16px;background:var(--navy);color:#fff}
+  input[type=password]{flex:1;min-width:220px;padding:12px 14px;border:1px solid #d2d2d7;border-radius:12px;font-size:15px;background:#fbfbfd;transition:border-color .15s, box-shadow .15s}
+  input[type=password]:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(29,43,77,.14)}
+  button,.boton{display:inline-block;border:none;cursor:pointer;text-decoration:none;font-size:15px;font-weight:600;border-radius:980px;padding:11px 20px;background:var(--navy);color:#fff;transition:transform .12s, background .15s, box-shadow .15s}
   button:hover,.boton:hover{background:var(--navy-dark)}
+  button:active,.boton:active{transform:scale(.98)}
+  button:focus-visible,.boton:focus-visible{outline:none;box-shadow:0 0 0 4px rgba(29,43,77,.25)}
   .boton.rojo{background:var(--red)} .boton.rojo:hover{background:#bc0c06}
   .boton.verde{background:var(--green)} .boton.verde:hover{background:#007a37}
-  .boton.claro{background:#eef2f8;color:var(--navy);border:1px solid #c9d2e0}
+  .boton.fb{background:var(--fb)} .boton.fb:hover{background:#0f5fd0}
+  .boton.wa{background:#25d366;color:#075e54} .boton.wa:hover{background:#1eb856}
+  .boton.claro{background:#eef2f8;color:var(--navy)}
   .boton.claro:hover{background:#dde6f2}
   .estado{font-size:14px;color:var(--muted)}
   .estado.error{color:var(--red);font-weight:600}
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
-  .stat{background:var(--wash);border:1px solid var(--line);border-left:5px solid var(--navy);border-radius:8px;padding:12px}
-  .stat b{display:block;font-size:26px;color:var(--navy)}
-  .stat span{font-size:13px;color:var(--muted)}
-  .stat.wa{border-left-color:var(--green)} .stat.fb{border-left-color:#1877f2}
-  .stat.web{border-left-color:var(--yellow)} .stat.can{border-left-color:var(--red)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:8px}
+  .stat{background:var(--wash);border-radius:14px;padding:16px}
+  .stat b{display:block;font-size:32px;font-weight:600;color:var(--navy);letter-spacing:-.5px}
+  .stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+  .stat .barra{height:4px;border-radius:2px;background:var(--navy);margin-bottom:10px}
+  .stat.wa .barra{background:var(--green)} .stat.fb .barra{background:var(--fb)}
+  .stat.web .barra{background:var(--yellow)} .stat.can .barra{background:var(--red)}
   .tabla{overflow-x:auto}
   table{border-collapse:collapse;width:100%;font-size:14px}
-  th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px;white-space:nowrap}
-  td{border-bottom:1px solid var(--line);padding:8px 10px;vertical-align:top}
-  tr:nth-child(even) td{background:#fafbfc}
-  .conv{white-space:pre-wrap;background:var(--wash);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13.5px;margin:6px 0 14px}
-  .rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
-  .herramienta{border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--wash)}
-  .herramienta h3{margin:0 0 4px;color:var(--navy);font-size:16px}
-  .herramienta p{margin:0 0 10px;font-size:13.5px;color:var(--muted)}
-  iframe.hoja{width:100%;height:480px;border:1px solid var(--line);border-radius:8px;background:#fff}
-  footer{background:var(--navy-dark);color:#d7dee9;text-align:center;padding:16px;font-size:13px}
+  th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px;text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{border-bottom:1px solid var(--line);padding:10px;vertical-align:top;line-height:1.45}
+  tbody tr{transition:background .12s}
+  tbody tr:hover td{background:#fafafc}
+  .conv{white-space:pre-wrap;background:var(--wash);border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.55;margin:6px 0 16px}
+  .rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .herramienta{border:1px solid var(--line);border-radius:14px;padding:18px;background:#fbfbfd}
+  .herramienta h3{margin:0 0 4px;color:var(--navy);font-size:16px;font-weight:600}
+  .herramienta p{margin:0 0 12px;font-size:13.5px;color:var(--muted);line-height:1.5}
+  iframe.hoja{width:100%;height:480px;border:1px solid var(--line);border-radius:12px;background:#fff}
+  footer{color:var(--muted);text-align:center;padding:22px 16px 30px;font-size:13px}
   .oculto{display:none}
+  @media (max-width:560px){
+    main{padding:20px 14px 40px}
+    .tarjeta{padding:20px 16px}
+    header h1{font-size:20px}
+  }
   @media print{
     body{background:#fff}
     header,.franja,.noprint,footer{display:none !important}
     main{max-width:none;padding:0}
     .tarjeta{box-shadow:none;border:none;padding:0}
-    #area-reporte{display:block !important}
     .solo-reporte{display:block !important}
   }
   .solo-reporte{display:none}
@@ -73,6 +88,17 @@
 <div class="franja">Página de demostración de la prueba del asistente · Los datos mostrados son los recabados durante la prueba</div>
 
 <main>
+  <!-- Probar el asistente -->
+  <section class="tarjeta noprint">
+    <h2>Probar el asistente</h2>
+    <p class="desc">Así se ve y así responde el asistente en cada canal. La página prototipo incluye el chat web en la esquina inferior.</p>
+    <div class="fila">
+      <a class="boton" target="_blank" rel="noopener" href="https://mago-del-caos.github.io/IJEM-prueba/">Página IJEM prototipo</a>
+      <a class="boton fb" target="_blank" rel="noopener" href="https://m.me/61596631331401">Probar en Facebook</a>
+      <a class="boton wa" target="_blank" rel="noopener" href="https://wa.me/522205881092?text=Hola%2C%20quiero%20pedir%20informes">Probar en WhatsApp</a>
+    </div>
+  </section>
+
   <!-- Acceso y tablero -->
   <section class="tarjeta noprint">
     <h2>Resultados del asistente</h2>
@@ -91,14 +117,14 @@
       <p class="desc" id="rep-fecha"></p>
     </div>
     <div class="stats">
-      <div class="stat"><b id="st-total">0</b><span>Interesados registrados</span></div>
-      <div class="stat wa"><b id="st-wa">0</b><span>Por WhatsApp</span></div>
-      <div class="stat fb"><b id="st-fb">0</b><span>Por Facebook</span></div>
-      <div class="stat web"><b id="st-web">0</b><span>Por la página web</span></div>
-      <div class="stat can"><b id="st-can">0</b><span>Casos canalizados a una persona</span></div>
+      <div class="stat"><div class="barra"></div><b id="st-total">0</b><span>Interesados registrados</span></div>
+      <div class="stat wa"><div class="barra"></div><b id="st-wa">0</b><span>Por WhatsApp</span></div>
+      <div class="stat fb"><div class="barra"></div><b id="st-fb">0</b><span>Por Facebook</span></div>
+      <div class="stat web"><div class="barra"></div><b id="st-web">0</b><span>Por la página web</span></div>
+      <div class="stat can"><div class="barra"></div><b id="st-can">0</b><span>Casos canalizados</span></div>
     </div>
 
-    <h2>Interesados registrados</h2>
+    <h2 class="seccion">Interesados registrados</h2>
     <div class="tabla">
       <table>
         <thead><tr><th>Fecha</th><th>Canal</th><th>Nombre</th><th>Contacto</th><th>Nivel</th><th>Mensaje o necesidad</th></tr></thead>
@@ -106,10 +132,10 @@
       </table>
     </div>
 
-    <h2 style="margin-top:22px">Casos canalizados (conversación completa)</h2>
+    <h2 class="seccion">Casos canalizados (conversación completa)</h2>
     <div id="lista-canalizaciones"><p class="desc">Sin canalizaciones todavía.</p></div>
 
-    <h2 style="margin-top:22px">Conversaciones recientes</h2>
+    <h2 class="seccion">Conversaciones recientes</h2>
     <div class="tabla">
       <table>
         <thead><tr><th>Fecha</th><th>Canal</th><th>Mensaje</th><th>Respuesta del asistente</th></tr></thead>
@@ -123,7 +149,7 @@
     <h2>Registro en Drive</h2>
     <p class="desc">La misma información vive en la hoja «Registro de datos recabados» de la carpeta de la prueba, con su pestaña de conversaciones completas.</p>
     <iframe class="hoja" title="Registro de datos recabados" src="https://docs.google.com/spreadsheets/d/1pYNF2pKduibqp71Z8O5pgwm0z_8XOrqNfaomJgpwArk/edit?usp=sharing"></iframe>
-    <div class="fila" style="margin-top:12px">
+    <div class="fila" style="margin-top:14px">
       <a class="boton claro" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1pYNF2pKduibqp71Z8O5pgwm0z_8XOrqNfaomJgpwArk/edit?usp=sharing">Abrir la hoja en Drive</a>
       <a class="boton claro" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/16Sv3NqLIzIxEU4HzMKwiYXd7ASrItfmk">Abrir la carpeta de la prueba</a>
     </div>
@@ -238,7 +264,7 @@
           var hist = JSON.parse(c.conversacion || '[]');
           texto = hist.map(function(m){ return (m.rol === 'usuario' ? 'Interesado: ' : 'Asistente: ') + (m.texto || ''); }).join('\n');
         } catch(e){ texto = c.conversacion || ''; }
-        return '<p style="margin:10px 0 0"><b>'+esc(fechaMx(c.fecha))+'</b> · '+esc(canalBonito(c.canal))+' · '+esc(c.wa_id || '')+'</p><div class="conv">'+esc(texto)+'</div>';
+        return '<p style="margin:12px 0 0"><b>'+esc(fechaMx(c.fecha))+'</b> · '+esc(canalBonito(c.canal))+' · '+esc(c.wa_id || '')+'</p><div class="conv">'+esc(texto)+'</div>';
       }).join('');
     }
 
