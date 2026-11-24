@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admisiones — Panel del asistente IJEM</title>
+<style>
+  :root{
+    --navy:#1d2b4d; --navy-dark:#131e38; --red:#e2231a; --green:#009945;
+    --yellow:#ffd100; --ink:#333333; --muted:#666666; --paper:#ffffff;
+    --wash:#f7f7f7; --line:#e2e2e2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',Arial,Helvetica,sans-serif;color:var(--ink);background:var(--wash)}
+  header{background:var(--navy);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  header img{height:56px;width:auto}
+  header .tit{flex:1;min-width:220px}
+  header h1{margin:0;font-size:24px;letter-spacing:.3px}
+  header p{margin:2px 0 0;color:#d7dee9;font-size:14px}
+  .franja{background:var(--yellow);color:#131e38;text-align:center;font-size:13px;padding:6px 10px;font-weight:600}
+  main{max-width:1080px;margin:0 auto;padding:20px 16px 40px}
+  .tarjeta{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px;box-shadow:0 1px 3px rgba(19,30,56,.06)}
+  .tarjeta h2{margin:0 0 6px;color:var(--navy);font-size:19px}
+  .tarjeta p.desc{margin:0 0 12px;color:var(--muted);font-size:14px}
+  .fila{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  input[type=password]{flex:1;min-width:220px;padding:11px 12px;border:1px solid #c9d2e0;border-radius:8px;font-size:15px}
+  button,.boton{display:inline-block;border:none;cursor:pointer;text-decoration:none;font-size:15px;font-weight:600;border-radius:8px;padding:11px 16px;background:var(--navy);color:#fff}
+  button:hover,.boton:hover{background:var(--navy-dark)}
+  .boton.rojo{background:var(--red)} .boton.rojo:hover{background:#bc0c06}
+  .boton.verde{background:var(--green)} .boton.verde:hover{background:#007a37}
+  .boton.claro{background:#eef2f8;color:var(--navy);border:1px solid #c9d2e0}
+  .boton.claro:hover{background:#dde6f2}
+  .estado{font-size:14px;color:var(--muted)}
+  .estado.error{color:var(--red);font-weight:600}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+  .stat{background:var(--wash);border:1px solid var(--line);border-left:5px solid var(--navy);border-radius:8px;padding:12px}
+  .stat b{display:block;font-size:26px;color:var(--navy)}
+  .stat span{font-size:13px;color:var(--muted)}
+  .stat.wa{border-left-color:var(--green)} .stat.fb{border-left-color:#1877f2}
+  .stat.web{border-left-color:var(--yellow)} .stat.can{border-left-color:var(--red)}
+  .tabla{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:14px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px;white-space:nowrap}
+  td{border-bottom:1px solid var(--line);padding:8px 10px;vertical-align:top}
+  tr:nth-child(even) td{background:#fafbfc}
+  .conv{white-space:pre-wrap;background:var(--wash);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13.5px;margin:6px 0 14px}
+  .rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .herramienta{border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--wash)}
+  .herramienta h3{margin:0 0 4px;color:var(--navy);font-size:16px}
+  .herramienta p{margin:0 0 10px;font-size:13.5px;color:var(--muted)}
+  iframe.hoja{width:100%;height:480px;border:1px solid var(--line);border-radius:8px;background:#fff}
+  footer{background:var(--navy-dark);color:#d7dee9;text-align:center;padding:16px;font-size:13px}
+  .oculto{display:none}
+  @media print{
+    body{background:#fff}
+    header,.franja,.noprint,footer{display:none !important}
+    main{max-width:none;padding:0}
+    .tarjeta{box-shadow:none;border:none;padding:0}
+    #area-reporte{display:block !important}
+    .solo-reporte{display:block !important}
+  }
+  .solo-reporte{display:none}
+</style>
+</head>
+<body>
+<header>
+  <img src="assets/logo-ijem.png" alt="Instituto Juventud">
+  <div class="tit">
+    <h1>Admisiones</h1>
+    <p>Panel del asistente virtual del Instituto Juventud · WhatsApp, Facebook y web</p>
+  </div>
+</header>
+<div class="franja">Página de demostración de la prueba del asistente · Los datos mostrados son los recabados durante la prueba</div>
+
+<main>
+  <!-- Acceso y tablero -->
+  <section class="tarjeta noprint">
+    <h2>Resultados del asistente</h2>
+    <p class="desc">Escribe la clave del panel para cargar los datos en vivo: interesados registrados, conversaciones y casos canalizados a atención personal.</p>
+    <div class="fila">
+      <input type="password" id="clave" placeholder="Clave del panel" autocomplete="off">
+      <button id="btn-cargar" type="button">Cargar datos</button>
+      <button id="btn-pdf" type="button" class="boton rojo oculto">Descargar reporte en PDF</button>
+      <span class="estado" id="estado"></span>
+    </div>
+  </section>
+
+  <section class="tarjeta oculto" id="tablero">
+    <div class="solo-reporte">
+      <h2 id="rep-titulo">Reporte del asistente de Admisiones</h2>
+      <p class="desc" id="rep-fecha"></p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="st-total">0</b><span>Interesados registrados</span></div>
+      <div class="stat wa"><b id="st-wa">0</b><span>Por WhatsApp</span></div>
+      <div class="stat fb"><b id="st-fb">0</b><span>Por Facebook</span></div>
+      <div class="stat web"><b id="st-web">0</b><span>Por la página web</span></div>
+      <div class="stat can"><b id="st-can">0</b><span>Casos canalizados a una persona</span></div>
+    </div>
+
+    <h2>Interesados registrados</h2>
+    <div class="tabla">
+      <table>
+        <thead><tr><th>Fecha</th><th>Canal</th><th>Nombre</th><th>Contacto</th><th>Nivel</th><th>Mensaje o necesidad</th></tr></thead>
+        <tbody id="tb-interesados"><tr><td colspan="6">Sin datos todavía.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2 style="margin-top:22px">Casos canalizados (conversación completa)</h2>
+    <div id="lista-canalizaciones"><p class="desc">Sin canalizaciones todavía.</p></div>
+
+    <h2 style="margin-top:22px">Conversaciones recientes</h2>
+    <div class="tabla">
+      <table>
+        <thead><tr><th>Fecha</th><th>Canal</th><th>Mensaje</th><th>Respuesta del asistente</th></tr></thead>
+        <tbody id="tb-conversaciones"><tr><td colspan="4">Sin conversaciones todavía.</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Drive -->
+  <section class="tarjeta noprint">
+    <h2>Registro en Drive</h2>
+    <p class="desc">La misma información vive en la hoja «Registro de datos recabados» de la carpeta de la prueba, con su pestaña de conversaciones completas.</p>
+    <iframe class="hoja" title="Registro de datos recabados" src="https://docs.google.com/spreadsheets/d/1pYNF2pKduibqp71Z8O5pgwm0z_8XOrqNfaomJgpwArk/edit?usp=sharing"></iframe>
+    <div class="fila" style="margin-top:12px">
+      <a class="boton claro" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1pYNF2pKduibqp71Z8O5pgwm0z_8XOrqNfaomJgpwArk/edit?usp=sharing">Abrir la hoja en Drive</a>
+      <a class="boton claro" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/16Sv3NqLIzIxEU4HzMKwiYXd7ASrItfmk">Abrir la carpeta de la prueba</a>
+    </div>
+  </section>
+
+  <!-- Conocimientos -->
+  <section class="tarjeta noprint">
+    <h2>Editar los conocimientos del asistente</h2>
+    <p class="desc">El asistente aprende de estos documentos. Al guardar cambios, el bot los refleja en un máximo de una hora. Los datos marcados [EDITAR] (costos, fechas, requisitos) no se inventan: se canaliza al interesado con el área.</p>
+    <div class="rejilla">
+      <div class="herramienta">
+        <h3>Cerebro del asistente</h3>
+        <p>Identidad, modelo educativo, valores y forma de responder con empatía. Es el documento que edita el área encargada.</p>
+        <a class="boton verde" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1pY6qUu3XhM8PE_muuTSsYd8F80GPp3mHIZ5Swo5yEuU/edit?usp=sharing">Editar el cerebro</a>
+      </div>
+      <div class="herramienta">
+        <h3>50 preguntas frecuentes</h3>
+        <p>Borrador de las preguntas que el asistente responde sin costo. La versión oficial la confirma el área de Diseño.</p>
+        <a class="boton verde" target="_blank" rel="noopener" href="https://docs.google.com/document/d/13lIsb3G9fdEWbr5XAZAZQYmK0kqWIZZ28xQVArWKMIk/edit?usp=sharing">Abrir las 50 preguntas</a>
+      </div>
+      <div class="herramienta">
+        <h3>Base de conocimiento</h3>
+        <p>Respuestas base y datos de contacto oficiales con los que arrancó la prueba.</p>
+        <a class="boton verde" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1oKZ9LEwXJwAao0K6kDNiMR9vMlXl3DxwyTCQmYAJd-I/edit?usp=sharing">Abrir la base</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Herramientas -->
+  <section class="tarjeta noprint">
+    <h2>Más herramientas del instituto</h2>
+    <p class="desc">Proyectos digitales que acompañan al asistente.</p>
+    <div class="rejilla">
+      <div class="herramienta">
+        <h3>Búsqueda educativa</h3>
+        <p>Buscador de escuelas cercanas al IJEM, gratuitas o de pago, con datos abiertos e investigados de la zona.</p>
+        <a class="boton" target="_blank" rel="noopener" href="https://mago-del-caos.github.io/SerchEducation/">Abrir Búsqueda educativa</a>
+      </div>
+      <div class="herramienta">
+        <h3>Ag Lucem</h3>
+        <p>La agenda institucional: calendario, horario, proyectos y la zona docente.</p>
+        <a class="boton" target="_blank" rel="noopener" href="https://mago-del-caos.github.io/Agenda/agenda.html">Abrir Ag Lucem</a>
+      </div>
+      <div class="herramienta">
+        <h3>Ju-bits</h3>
+        <p>Tutores de inteligencia artificial para preparatoria.</p>
+        <a class="boton" target="_blank" rel="noopener" href="https://mago-del-caos.github.io/Ju-bits/">Abrir Ju-bits</a>
+      </div>
+      <div class="herramienta">
+        <h3>Ju-bits Kids</h3>
+        <p>Acompañantes digitales para primaria, para madres, padres y tutores con sus hijos.</p>
+        <a class="boton" target="_blank" rel="noopener" href="https://mago-del-caos.github.io/Ju-bits-kids-/">Abrir Ju-bits Kids</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>Instituto Juventud · Panel de Admisiones de la prueba del asistente virtual · Para mayor información, contáctanos.</footer>
+
+<script>
+(function(){
+  var API = "https://ak.aracknia.com/mensajes?limite=300";
+  var claveEl = document.getElementById('clave');
+  var estadoEl = document.getElementById('estado');
+  var tablero = document.getElementById('tablero');
+  var btnPdf = document.getElementById('btn-pdf');
+  var datos = null;
+
+  function fechaMx(iso){
+    try { return new Date(iso).toLocaleString('es-MX',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
+    catch(e){ return iso || ''; }
+  }
+  function canalBonito(c){
+    if(c === 'whatsapp') return 'WhatsApp';
+    if(c === 'facebook') return 'Facebook';
+    if(c === 'web') return 'Web';
+    return c || '';
+  }
+  function esc(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(ch){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];
+    });
+  }
+
+  function render(){
+    if(!datos) return;
+    var regs = datos.filter(function(m){ return m.tipo === 'registro' && !m.dueno; });
+    var cans = datos.filter(function(m){ return m.tipo === 'canalizacion'; });
+    var convs = datos.filter(function(m){ return m.tipo === 'text' && !m.dueno; }).slice(-30).reverse();
+
+    document.getElementById('st-total').textContent = regs.length;
+    document.getElementById('st-wa').textContent = regs.filter(function(r){return r.canal==='whatsapp';}).length;
+    document.getElementById('st-fb').textContent = regs.filter(function(r){return r.canal==='facebook';}).length;
+    document.getElementById('st-web').textContent = regs.filter(function(r){return r.canal==='web';}).length;
+    document.getElementById('st-can').textContent = cans.length;
+    document.getElementById('rep-fecha').textContent = 'Generado el ' + new Date().toLocaleString('es-MX') + ' · Fuente: registro del asistente (WhatsApp, Facebook y web).';
+
+    var tb = document.getElementById('tb-interesados');
+    if(!regs.length){ tb.innerHTML = '<tr><td colspan="6">Sin interesados registrados todavía.</td></tr>'; }
+    else {
+      tb.innerHTML = regs.slice().reverse().map(function(r){
+        return '<tr><td>'+esc(fechaMx(r.fecha))+'</td><td>'+esc(canalBonito(r.canal))+'</td><td>'+esc(r.nombre || '')+'</td><td>'+esc(r.contacto || r.wa_id || '')+'</td><td>'+esc(r.nivel || '')+'</td><td>'+esc(r.texto || '')+'</td></tr>';
+      }).join('');
+    }
+
+    var lc = document.getElementById('lista-canalizaciones');
+    if(!cans.length){ lc.innerHTML = '<p class="desc">Sin canalizaciones todavía.</p>'; }
+    else {
+      lc.innerHTML = cans.slice().reverse().map(function(c){
+        var texto = '';
+        try {
+          var hist = JSON.parse(c.conversacion || '[]');
+          texto = hist.map(function(m){ return (m.rol === 'usuario' ? 'Interesado: ' : 'Asistente: ') + (m.texto || ''); }).join('\n');
+        } catch(e){ texto = c.conversacion || ''; }
+        return '<p style="margin:10px 0 0"><b>'+esc(fechaMx(c.fecha))+'</b> · '+esc(canalBonito(c.canal))+' · '+esc(c.wa_id || '')+'</p><div class="conv">'+esc(texto)+'</div>';
+      }).join('');
+    }
+
+    var tc = document.getElementById('tb-conversaciones');
+    if(!convs.length){ tc.innerHTML = '<tr><td colspan="4">Sin conversaciones todavía.</td></tr>'; }
+    else {
+      tc.innerHTML = convs.map(function(m){
+        return '<tr><td>'+esc(fechaMx(m.fecha))+'</td><td>'+esc(canalBonito(m.canal))+'</td><td>'+esc(m.texto || '')+'</td><td>'+esc(m.respuesta_enviada || '')+'</td></tr>';
+      }).join('');
+    }
+    tablero.classList.remove('oculto');
+    btnPdf.classList.remove('oculto');
+  }
+
+  function cargar(){
+    var clave = (claveEl.value || '').trim() || sessionStorage.getItem('admisiones_clave') || '';
+    if(!clave){ estadoEl.textContent = 'Escribe la clave del panel.'; estadoEl.className = 'estado error'; return; }
+    estadoEl.textContent = 'Cargando…'; estadoEl.className = 'estado';
+    fetch(API, { headers: { 'X-Report-Secret': clave } })
+      .then(function(r){ if(!r.ok) throw new Error('http ' + r.status); return r.json(); })
+      .then(function(d){
+        sessionStorage.setItem('admisiones_clave', clave);
+        datos = d.mensajes || [];
+        estadoEl.textContent = 'Datos actualizados: ' + datos.length + ' registros del asistente.';
+        render();
+      })
+      .catch(function(e){
+        estadoEl.textContent = 'No se pudo cargar (revisa la clave y que el sistema tenga la versión más reciente).';
+        estadoEl.className = 'estado error';
+      });
+  }
+
+  document.getElementById('btn-cargar').addEventListener('click', cargar);
+  claveEl.addEventListener('keydown', function(ev){ if(ev.key === 'Enter') cargar(); });
+  btnPdf.addEventListener('click', function(){ window.print(); });
+
+  var guardada = sessionStorage.getItem('admisiones_clave');
+  if(guardada){ claveEl.value = guardada; cargar(); }
+})();
+</script>
+</body>
+</html>
